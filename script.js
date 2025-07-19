@@ -1,11 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
     const asignaturas = document.querySelectorAll('.asignatura');
     const mallaContainer = document.querySelector('.malla-container');
-    let activeLines = []; // Para almacenar las líneas SVG activas
+    // activeLines ya no es estrictamente necesario para dibujar, pero se mantiene clearLines
+    let activeLines = []; 
 
     // --- Funciones de Utilidad ---
 
-    // Función de debounce para optimizar el rendimiento de eventos como resize y scroll
     function debounce(func, delay) {
         let timeout;
         return function(...args) {
@@ -15,7 +15,8 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 
-    // Función para obtener la posición y dimensiones de un elemento en relación con el documento
+    // drawLine ya no es necesaria, la mantenemos comentada o la podrías borrar
+    /*
     const getElementCoords = (element) => {
         const rect = element.getBoundingClientRect();
         return {
@@ -28,76 +29,22 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     };
 
-    // Función para dibujar una línea SVG entre dos elementos
     const drawLine = (startElement, endElement, isPrereq = false) => {
-        const startCoords = getElementCoords(startElement);
-        const endCoords = getElementCoords(endElement);
-
-        const startX = startCoords.left + startCoords.width;
-        const startY = startCoords.top + startCoords.height / 2;
-        const endX = endCoords.left;
-        const endY = endCoords.top + endCoords.height / 2;
-
-        const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        svg.classList.add('prereq-svg-line');
-        svg.style.position = 'absolute';
-        svg.style.overflow = 'visible';
-        svg.style.zIndex = '5';
-        svg.style.pointerEvents = 'none';
-
-        const minX = Math.min(startX, endX);
-        const maxX = Math.max(startX, endX);
-        const minY = Math.min(startY, endY);
-        const maxY = Math.max(startY, endY);
-
-        const margin = 10;
-        svg.style.left = `${minX - margin}px`;
-        svg.style.top = `${minY - margin}px`;
-        svg.style.width = `${maxX - minX + (2 * margin)}px`;
-        svg.style.height = `${maxY - minY + (2 * margin)}px`;
-        svg.setAttribute('viewBox', `0 0 ${maxX - minX + (2 * margin)} ${maxY - minY + (2 * margin)}`);
-
-        const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
-        line.setAttribute('x1', startX - minX + margin);
-        line.setAttribute('y1', startY - minY + margin);
-        line.setAttribute('x2', endX - minX + margin);
-        line.setAttribute('y2', endY - minY + margin);
-        line.setAttribute('stroke', isPrereq ? '#28a745' : '#007bff');
-        line.setAttribute('stroke-width', '2');
-        line.setAttribute('marker-end', 'url(#arrowhead)');
-
-        svg.appendChild(line);
-
-        const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
-        const marker = document.createElementNS("http://www.w3.org/2000/svg", "marker");
-        marker.setAttribute('id', 'arrowhead');
-        marker.setAttribute('markerWidth', '10');
-        marker.setAttribute('markerHeight', '7');
-        marker.setAttribute('refX', '10');
-        marker.setAttribute('refY', '3.5');
-        marker.setAttribute('orient', 'auto');
-        marker.setAttribute('fill', isPrereq ? '#28a745' : '#007bff');
-        const polygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
-        polygon.setAttribute('points', '0 0, 10 3.5, 0 7');
-        marker.appendChild(polygon);
-        defs.appendChild(marker);
-        svg.appendChild(defs);
-
-        mallaContainer.appendChild(svg);
-        activeLines.push(svg);
+        // Esta función ya no se llama, pero si la necesitaras para depurar, aquí está el contenido original.
+        // ... (código original de drawLine) ...
     };
+    */
 
-    // Función para limpiar todas las líneas
+    // clearLines ahora solo asegura que no haya SVGs residuales si alguna vez se dibujaron
     const clearLines = () => {
         activeLines.forEach(line => line.remove());
         activeLines = [];
     };
 
-    // --- Lógica de Materias Cursadas (Nueva) ---
+    // --- Lógica de Materias Cursadas ---
 
     const CURSADAS_STORAGE_KEY = 'mallaPsicopedagogia_cursadas';
 
-    // Función para cargar el estado de las materias cursadas desde localStorage
     const loadCursadasState = () => {
         try {
             const cursadasIds = JSON.parse(localStorage.getItem(CURSADAS_STORAGE_KEY) || '[]');
@@ -109,12 +56,10 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         } catch (e) {
             console.error("Error al cargar el estado de las materias cursadas:", e);
-            // Si hay un error (ej. JSON corrupto), limpiar localStorage para evitar futuros errores
             localStorage.removeItem(CURSADAS_STORAGE_KEY);
         }
     };
 
-    // Función para guardar el estado de las materias cursadas en localStorage
     const saveCursadasState = () => {
         const cursadasIds = [];
         document.querySelectorAll('.asignatura.cursada').forEach(asignatura => {
@@ -130,109 +75,82 @@ document.addEventListener('DOMContentLoaded', () => {
             const currentAsignatura = event.currentTarget;
             const asignaturaId = currentAsignatura.dataset.id;
 
-            // 1. Alternar el estado "cursada" para la materia clicada
+            // Alternar el estado "cursada"
             currentAsignatura.classList.toggle('cursada');
-            saveCursadasState(); // Guardar el nuevo estado
+            saveCursadasState();
 
-            // 2. Manejar la lógica de selección para la visualización de prerrequisitos
-            // Primero, deseleccionar *todas* las asignaturas y ocultar info de prerrequisitos
+            // Deseleccionar todas las asignaturas y limpiar resaltados previos
             asignaturas.forEach(item => {
-                // Solo remover las clases relacionadas con la selección y prerrequisitos
-                // PERO NO la clase 'cursada' si la tiene
-                item.classList.remove('selected', 'prerequisito-active', 'cumple-prerequisito');
+                item.classList.remove('selected', 'prerequisito-active', 'dependencia-active'); // Eliminamos 'cumple-prerequisito' y añadimos 'dependencia-active'
                 const prereqInfo = item.querySelector('.prereq-info');
                 if (prereqInfo) {
                     prereqInfo.style.display = 'none';
                 }
             });
-            clearLines(); // Limpiar las líneas SVG
+            clearLines(); // Asegurarse de limpiar cualquier SVG residual
 
-            // 3. Si la asignatura clicada NO tiene la clase 'selected' (después de haberlas limpiado todas)
-            // entonces la seleccionamos para mostrar sus prerrequisitos.
-            // Esto significa que un click alternará el estado 'cursada' Y activará la vista de prerrequisitos,
-            // y un segundo click en la misma asignatura la deseleccionará para la vista de prerrequisitos
-            // (pero mantendrá su estado 'cursada').
-            if (!currentAsignatura.classList.contains('selected')) { // Verificar si está siendo seleccionada AHORA
+            // Si la asignatura clicada NO tiene la clase 'selected' (después de haberlas limpiado)
+            // entonces la seleccionamos para mostrar sus relaciones.
+            if (!currentAsignatura.classList.contains('selected')) {
                 currentAsignatura.classList.add('selected');
                 const currentPrereqInfo = currentAsignatura.querySelector('.prereq-info');
                 if (currentPrereqInfo) {
                     currentPrereqInfo.style.display = 'block'; // Mostrar info de prerrequisitos
                 }
 
-                // Resaltar prerrequisitos (los que esta materia necesita)
+                // Resaltar prerrequisitos de la asignatura seleccionada
                 const prereqIds = currentAsignatura.dataset.prerequisito;
                 if (prereqIds) {
                     const requiredPrereqs = prereqIds.split(',').map(id => id.trim());
                     requiredPrereqs.forEach(prereqId => {
                         const prereqElement = document.querySelector(`.asignatura[data-id="${prereqId}"]`);
                         if (prereqElement) {
-                            prereqElement.classList.add('prerequisito-active');
-                            drawLine(prereqElement, currentAsignatura, true);
+                            prereqElement.classList.add('prerequisito-active'); // Clase para prerrequisitos requeridos
                         }
                     });
                 }
 
-                // Resaltar las materias que esta asignatura es prerrequisito (es decir, las materias que dependen de la actual)
+                // Resaltar las materias que tienen la asignatura seleccionada como prerrequisito
                 asignaturas.forEach(otherAsignatura => {
                     const otherPrereqIds = otherAsignatura.dataset.prerequisito;
                     if (otherPrereqIds && otherPrereqIds.split(',').map(id => id.trim()).includes(asignaturaId)) {
-                        otherAsignatura.classList.add('cumple-prerequisito');
-                        drawLine(currentAsignatura, otherAsignatura, false);
+                        otherAsignatura.classList.add('dependencia-active'); // Clase para dependencias futuras
                     }
                 });
             }
-            // Si el click fue para deseleccionar la asignatura (porque ya estaba seleccionada),
-            // la lógica de limpieza al inicio del listener ya se encargó de eso, no necesitamos más acción aquí.
         });
     });
 
     // Añadir un listener para clic fuera de las asignaturas para deseleccionar
     document.addEventListener('click', (event) => {
-        // Si el clic no fue dentro de una asignatura (o un descendiente de .asignatura)
         if (!event.target.closest('.asignatura')) {
             asignaturas.forEach(item => {
-                // Remover solo las clases de selección y prerrequisitos
-                item.classList.remove('selected', 'prerequisito-active', 'cumple-prerequisito');
+                item.classList.remove('selected', 'prerequisito-active', 'dependencia-active');
                 const prereqInfo = item.querySelector('.prereq-info');
                 if (prereqInfo) {
                     prereqInfo.style.display = 'none';
                 }
             });
-            clearLines(); // Limpiar las líneas SVG
+            clearLines();
         }
     });
 
     // --- Inicialización al cargar la página ---
 
-    loadCursadasState(); // Cargar el estado al inicio
+    loadCursadasState();
 
+    // El debouncedRedrawLines ya no es esencial para líneas, pero se mantiene para la lógica de resaltado
     const debouncedRedrawLines = debounce(() => {
-        clearLines();
+        clearLines(); // Limpiar cualquier SVG residual
         const selectedAsignatura = document.querySelector('.asignatura.selected');
         if (selectedAsignatura) {
-            // Re-activar la visualización de líneas para la asignatura que estaba seleccionada
-            // Es crucial porque loadCursadasState no maneja esto.
-            // Aquí simulamos un click, pero solo para activar la visualización,
-            // sin alterar el estado 'cursada' ni la selección.
-            // Para evitar un bucle o toggle no deseado del 'cursada' en un resize/scroll,
-            // necesitamos una forma de "activar solo la vista de prerrequisitos".
-            // Una forma simple es extraer esa lógica a una función separada.
-
-            // Mejorar: llamar a una función que solo dibuje líneas y resalte, sin toggles.
-            // Por ahora, el simulacro de click funciona pero es un hack.
-            // Dada la estructura actual, este click activará/desactivará la selección
-            // y el estado cursada si la asignatura no estaba ya seleccionada antes del resize/scroll.
-            // Para este caso particular (redibujar por resize/scroll), la mejor opción
-            // es una función dedicada `highlightPrerequisites(asignatura)`
-            // y llamarla aquí en lugar de `selectedAsignatura.click()`.
-            // Por simplicidad y dada la necesidad de enviar el código completo,
-            // mantendré el click simulado por ahora, pero ten en cuenta esta mejora.
-             const currentPrereqInfo = selectedAsignatura.querySelector('.prereq-info');
+            // Repetir la lógica de resaltado de clases si hay una asignatura seleccionada
+            selectedAsignatura.classList.add('selected');
+            const currentPrereqInfo = selectedAsignatura.querySelector('.prereq-info');
             if (currentPrereqInfo) {
-                currentPrereqInfo.style.display = 'block'; // Asegurarse que la info se muestra
+                currentPrereqInfo.style.display = 'block';
             }
-            selectedAsignatura.classList.add('selected'); // Asegurarse que sigue seleccionada visualmente
-            
+
             const prereqIds = selectedAsignatura.dataset.prerequisito;
             if (prereqIds) {
                 const requiredPrereqs = prereqIds.split(',').map(id => id.trim());
@@ -240,7 +158,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     const prereqElement = document.querySelector(`.asignatura[data-id="${prereqId}"]`);
                     if (prereqElement) {
                         prereqElement.classList.add('prerequisito-active');
-                        drawLine(prereqElement, selectedAsignatura, true);
                     }
                 });
             }
@@ -248,8 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
             asignaturas.forEach(otherAsignatura => {
                 const otherPrereqIds = otherAsignatura.dataset.prerequisito;
                 if (otherPrereqIds && otherPrereqIds.split(',').map(id => id.trim()).includes(currentAsignaturaId)) {
-                    otherAsignatura.classList.add('cumple-prerequisito');
-                    drawLine(selectedAsignatura, otherAsignatura, false);
+                    otherAsignatura.classList.add('dependencia-active');
                 }
             });
         }
