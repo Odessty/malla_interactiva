@@ -109,6 +109,27 @@ h1 {
     border-color: #007bff;
     box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
 }
+/* Nuevo estilo para materias cursadas */
+.asignatura.cursada {
+    background-color: #d4edda; /* Un verde claro */
+    border-color: #28a745; /* Borde verde */
+    box-shadow: 0 1px 3px rgba(40, 167, 69, 0.2);
+}
+
+/* Prioridad visual: Cuando una asignatura está seleccionada, su color de selección debe dominar */
+.asignatura.selected {
+    background-color: #d1ecf1; /* Color de selección (azul claro) */
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
+    /* Puedes añadir !important si necesitas forzar la prioridad, pero con el orden correcto no debería ser necesario */
+}
+
+/* Asegurarse de que el hover siga funcionando */
+.asignatura:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    border-color: #007bff;
+}
 
 .asignatura.prerequisito-active {
     outline: 2px solid #28a745; /* Resaltar prerequisitos activos */
