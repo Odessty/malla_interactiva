@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Malla Interactiva de Psicopedagogía</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Malla Curricular de Psicopedagogía</h1>
+    </header>
+
+    <div class="malla-container">
+        <div class="semestre" id="semestre-1">
+            <h2>I</h2>
+            <div class="asignatura" data-id="hmp" data-semestre="1">
+                <h3>HISTORIA Y FUNDAMENTOS DE LA PEDAGOGIA</h3>
+                <span class="creditos">4</span>
+            </div>
+            <div class="asignatura" data-id="re" data-semestre="1">
+                <h3>RETORICA Y EXPRESIÓN</h3>
+                <span class="creditos">2</span>
+            </div>
+            <div class="asignatura" data-id="lenguaje" data-semestre="1">
+                <h3>LENGUAJE</h3>
+                <span class="creditos">2</span>
+            </div>
+        </div>
+
+        <div class="semestre" id="semestre-2">
+            <h2>II</h2>
+            <div class="asignatura" data-id="pn" data-semestre="2">
+                <h3>PERSONA Y NATURALEZA</h3>
+                <span class="creditos">3</span>
+            </div>
+            <div class="asignatura" data-id="fvsv" data-semestre="2">
+                <h3>FELICIDAD Y SENTIDO DE LA VIDA</h3>
+                <span class="creditos">3</span>
+            </div>
+            <div class="asignatura" data-id="esr" data-semestre="2">
+                <h3>ETICA Y RESPONSABILIDAD SOCIAL</h3>
+                <span class="creditos">3</span>
+            </div>
+            <div class="asignatura" data-id="dse" data-semestre="2">
+                <h3>DESARROLLO DE LA SENSIBILIDAD ESTÉTICA</h3>
+                <span class="creditos">2</span>
+            </div>
+            <div class="asignatura" data-id="et" data-semestre="2" data-prerequisito="psicodesarrolloinfante">
+                <h3>EDUCACIÓN TEMPRANA</h3>
+                <span class="creditos">2</span>
+                <span class="prereq-info">Prerrequisitos: PSICOLOGÍA DEL DESARROLLO DEL INFANTE, NIÑO ADOLESCENTE</span>
+            </div>
+            <div class="asignatura" data-id="ene" data-semestre="2">
+                <h3>ENTORNO EDUCATIVO NACIONAL Y POLITICAS PÚBLICAS</h3>
+                <span class="creditos">3</span>
+            </div>
+        </div>
+
+        <div class="semestre" id="semestre-3">
+            <h2>III</h2>
+             <div class="asignatura" data-id="fhoc" data-semestre="3">
+                <h3>FUNDAMENTOS HISTORICOS DE LA CULTURA OCCIDENTAL</h3>
+                <span class="creditos">3</span>
+            </div>
+             <div class="asignatura" data-id="ae" data-semestre="3">
+                <h3>ARTE Y ESTETICA</h3>
+                <span class="creditos">3</span>
+            </div>
+            <div class="asignatura" data-id="pdec" data-semestre="3">
+                <h3>PLANIFICACIÓN, DESARROLLO Y EVALUACIÓN CURRICULAR</h3>
+                <span class="creditos">4</span>
+            </div>
+             <div class="asignatura" data-id="dle" data-semestre="3">
+                <h3>DIDÁCTICA DE LA LENGUA Y LA ESCRITURA</h3>
+                <span class="creditos">2</span>
+            </div>
+             <div class="asignatura" data-id="pi" data-semestre="3">
+                <h3>PEDAGOGIAS INNOVADORAS</h3>
+                <span class="creditos">4</span>
+            </div>
+             <div class="asignatura" data-id="dce" data-semestre="3">
+                <h3>DIDÁCTICA DE LAS CIENCIAS EXACTAS</h3>
+                <span class="creditos">2</span>
+            </div>
+             <div class="asignatura" data-id="ppeeb" data-semestre="3">
+                <h3>PRÁCTICAS PRE-PROFESIONALES DE EDUCACIÓN BÁSICA</h3>
+                <span class="creditos">3</span>
+            </div>
+             <div class="asignatura" data-id="pa" data-semestre="3">
+                <h3>PSICOLOGÍA DEL APRENDIZAJE</h3>
+                <span class="creditos">3</span>
+            </div>
+        </div>
+
+        <div class="semestre" id="semestre-4">
+            <h2>IV</h2>
+             <div class="asignatura" data-id="ogec" data-semestre="4">
+                <h3>ORGANIZACIÓN, GESTIÓN Y EVALUACIÓN DE CENTROS EDUCATIVOS</h3>
+                <span class="creditos">2</span>
+            </div>
+             <div class="asignatura" data-id="ntpd" data-semestre="4">
+                <h3>NUEVAS TECNOLOGÍAS EN LOS PROCESOS DIDÁCTICOS</h3>
+                <span class="creditos">2</span>
+            </div>
+        </div>
+
+        <div class="formacion-categoria" data-categoria="investigacion">
+            <h3>FORMACIÓN EN INVESTIGACIÓN</h3>
+            <div class="asignatura" data-id="eg" data-semestre="transversal">
+                <h3>ESTADÍSTICA GENERAL</h3>
+                <span class="creditos">3</span>
+            </div>
+            <div class="asignatura" data-id="msn" data-semestre="transversal">
+                <h3>MORFOFUNCIÓN DEL SISTEMA NERVIOSO</h3>
+                <span class="creditos">4</span>
+            </div>
+            <div class="asignatura" data-id="paimei" data-semestre="transversal">
+                <h3>PRINCIPIOS, APLICACIÓN Y MÉTODOS DE LA INVESTIGACIÓN EDUCATIVA</h3>
+                <span class="creditos">3</span>
+            </div>
+            <div class="asignatura" data-id="spdpg" data-semestre="transversal">
+                <h3>SEMINARIO DE PROYECTO DE GRADO</h3>
+                <span class="creditos">2</span>
+            </div>
+        </div>
+
+        <div class="formacion-categoria" data-categoria="psicometria-psicologia">
+            <h3>FORMACIÓN PSICOMETRÍA Y PSICOLOGÍA</h3>
+            <div class="asignatura" data-id="fp" data-semestre="transversal">
+                <h3>FUNDAMENTOS DE LA PSICOLOGÍA</h3>
+                <span class="creditos">3</span>
+            </div>
+            <div class="asignatura" data-id="ps" data-semestre="transversal">
+                <h3>PSICOLOGÍA SOCIAL</h3>
+                <span class="creditos">2</span>
+            </div>
+            <div class="asignatura" data-id="psicodesarrolloinfante" data-semestre="transversal">
+                <h3>PSICOLOGÍA DEL DESARROLLO DEL INFANTE, NIÑO Y ADOLESCENTE</h3>
+                <span class="creditos">4</span>
+                <span class="prereq-info">Prerrequisitos: MORFOFUNCIÓN DEL SISTEMA NERVIOSO</span>
+            </div>
+             <div class="asignatura" data-id="psicoaprendizaje" data-semestre="transversal">
+                <h3>PSICOLOGÍA DEL APRENDIZAJE</h3>
+                <span class="creditos">3</span>
+            </div>
+            <div class="asignatura" data-id="psicolinguistica" data-semestre="transversal" data-prerequisito="msn">
+                <h3>PSICOLINGUISTICA</h3>
+                <span class="creditos">3</span>
+                <span class="prereq-info">Prerrequisitos: MORFOFUNCIÓN DEL SISTEMA NERVIOSO</span>
+            </div>
+            <div class="asignatura" data-id="pp" data-semestre="transversal" data-prerequisito="eg">
+                <h3>PSICOMETRÍA PSICOPEDAGOGICA</h3>
+                <span class="creditos">3</span>
+                <span class="prereq-info">Prerrequisitos: ESTADÍSTICA GENERAL</span>
+            </div>
+            <div class="asignatura" data-id="taipractica" data-semestre="transversal" data-prerequisito="dle,dce">
+                <h3>TRASTORNOS DEL APRENDIZAJE Y SU INTERVENCIÓN EN LA PRACTICA ESCOLAR</h3>
+                <span class="creditos">4</span>
+                <span class="prereq-info">Prerrequisitos: DIDÁCTICA DE LA LENGUA Y ESCRITURA, DIDÁCTICA DE LAS CIENCIAS EXACTAS</span>
+            </div>
+             <div class="asignatura" data-id="tnsiepe" data-semestre="transversal">
+                <h3>TRASTORNOS DEL NEURODESARROLLO Y SU INTERVENCIÓN EN LA PRÁCTICA DE LA EDUCACIÓN ESPECIAL</h3>
+                <span class="creditos">4</span>
+            </div>
+             <div class="asignatura" data-id="pdaria" data-semestre="transversal">
+                <h3>PSICOLOGÍA DEL DESARROLLO DEL ADULTO Y DEL ANCIANO APLICADA A LA REHABILITACIÓN SOCIOCOGNITIVA</h3>
+                <span class="creditos">3</span>
+            </div>
+            <div class="asignatura" data-id="ov" data-semestre="transversal" data-prerequisito="dp">
+                <h3>ORIENTACIÓN VOCACIONAL</h3>
+                <span class="creditos">3</span>
+                <span class="prereq-info">Prerrequisitos: DEONTOLOGÍA PROFESIONAL</span>
+            </div>
+             <div class="asignatura" data-id="psicopatologia" data-semestre="transversal">
+                <h3>PSICOPATOLOGÍA</h3>
+                <span class="creditos">3</span>
+            </div>
+        </div>
+
+        <div class="formacion-categoria" data-categoria="complementaria">
+            <h3>FORMACIÓN COMPLEMENTARIA</h3>
+             <div class="asignatura" data-id="ac1" data-semestre="transversal">
+                <h3>ARTE Y CULTURA I</h3>
+                <span class="creditos">1</span>
+            </div>
+             <div class="asignatura" data-id="d2" data-semestre="transversal">
+                <h3>DEPORTES II</h3>
+                <span class="creditos">1</span>
+            </div>
+             <div class="asignatura" data-id="caa" data-semestre="transversal" data-prerequisito="psicolinguistica">
+                <h3>COMUNICACION ALTERNATIVA Y AUMENTATIVA</h3>
+                <span class="creditos">2</span>
+                <span class="prereq-info">Prerrequisitos: PSICOLINGÜÍSTICA</span>
+            </div>
+             <div class="asignatura" data-id="ci" data-semestre="transversal">
+                <h3>CREATIVIDAD E INNOVACIÓN</h3>
+                <span class="creditos">2</span>
+            </div>
+             <div class="asignatura" data-id="si" data-semestre="transversal">
+                <h3>STARTUP-INCUBATION</h3>
+                <span class="creditos">2</span>
+            </div>
+             <div class="asignatura" data-id="pa" data-semestre="transversal">
+                <h3>PICKUP-ACCELERATION</h3>
+                <span class="creditos">2</span>
+            </div>
+             <div class="asignatura" data-id="ac2" data-semestre="transversal">
+                <h3>ARTE Y CULTURA II</h3>
+                <span class="creditos">1</span>
+            </div>
+             <div class="asignatura" data-id="d1" data-semestre="transversal">
+                <h3>DEPORTES I</h3>
+                <span class="creditos">1</span>
+            </div>
+        </div>
+
+        <div class="itinerarios-container">
+            <div class="itinerario" data-id="itinerario1" data-prerequisito="taipractica">
+                <h3>ITINERARIO: ATENCIÓN TEMPRANA EN EL AUTISMO Y NEE ASOCIADAS A LA DISCAPACIDAD</h3>
+                <span class="creditos">3</span>
+                <span class="prereq-info">Prerrequisito: TRASTORNOS DEL APRENDIZAJE Y SU INTERVENCIÓN EN LA PRÁCTICA ESCOLAR</span>
+            </div>
+            <div class="itinerario" data-id="itinerario2">
+                <h3>ITINERARIO: MODELOS ACTUALES FAMILIA Y ESCUELA EN ATENCIÓN TEMPRANA. DISEÑO Y ADAPTACIONES CURRICULARES</h3>
+                <span class="creditos">3</span>
+            </div>
+        </div>
+
+         <div class="semestre" id="semestre-5">
+            <h2>V</h2>
+            <div class="asignatura" data-id="eie" data-semestre="5">
+                <h3>EDUCACIÓN Y PENSAMIENTO INTERCULTURAL</h3>
+                <span class="creditos">2</span>
+            </div>
+            <div class="asignatura" data-id="ogec" data-semestre="5">
+                <h3>ORGANIZACIÓN, GESTIÓN Y EVALUACIÓN DE CENTROS EDUCATIVOS</h3>
+                <span class="creditos">2</span>
+            </div>
+        </div>
+
+        <div class="semestre" id="semestre-6">
+            <h2>VI</h2>
+            <div class="asignatura" data-id="dp" data-semestre="6" data-prerequisito="esr, tnsiepe">
+                <h3>DEONTOLOGÍA PROFESIONAL</h3>
+                <span class="creditos">2</span>
+                <span class="prereq-info">Prerrequisitos: ÉTICA Y RESPONSABILIDAD SOCIAL, TRASTORNOS DEL NEURODESARROLLO Y SU INTERVENCIÓN EN LA PRÁCTICA DE LA EDUCACIÓN ESPECIAL</span>
+            </div>
+             <div class="asignatura" data-id="cee" data-semestre="6">
+                <h3>CORRIENTES Y ENFOQUES PEDAGÓGICOS CONTEMPORANEOS</h3>
+                <span class="creditos">3</span>
+            </div>
+             <div class="asignatura" data-id="mopipf" data-semestre="6">
+                <h3>MODELOS DE ORIENTACIÓN E INTERVENCIÓN PSICOPEDAGOGICA PERSONAL Y FAMILIAR</h3>
+                <span class="creditos">4</span>
+            </div>
+             <div class="asignatura" data-id="ph" data-semestre="6">
+                <h3>PEDAGOGÍA HOSPITALARIA</h3>
+                <span class="creditos">3</span>
+            </div>
+             <div class="asignatura" data-id="esod" data-semestre="6" data-prerequisito="pdaria">
+                <h3>EVALUACION, SISTEMATIZACIÓN Y ORIENTACIÓN DOCENTE</h3>
+                <span class="creditos">2</span>
+                 <span class="prereq-info">Prerrequisitos: PSICOLOGÍA DEL DESARROLLO DEL ADULTO Y DEL ANCIANO APLICADA A LA REHABILITACIÓN SOCIOCOGNITIVA, PSICOPATOLOGÍA</span>
+            </div>
+             <div class="asignatura" data-id="eav" data-semestre="6" data-prerequisito="fvsv">
+                <h3>EDUCACIÓN DE LA AFECTIVIDAD Y LA VOLUNTAD</h3>
+                <span class="creditos">2</span>
+                 <span class="prereq-info">Prerrequisito: FELICIDAD Y SENTIDO DE LA VIDA</span>
+            </div>
+             <div class="asignatura" data-id="ei" data-semestre="6" data-prerequisito="pdaria">
+                <h3>EDUCACIÓN INCLUSIVA APLICADA</h3>
+                <span class="creditos">3</span>
+                <span class="prereq-info">Prerrequisitos: PSICOLOGÍA DEL DESARROLLO DEL ADULTO Y DEL ANCIANO APLICADA A LA REHABILITACIÓN SOCIOCOGNITIVA</span>
+            </div>
+        </div>
+
+
+    </div> <div class="simbologia">
+        <p><span class="prereq-icon materia"></span> Prerrequisito de una materia</p>
+        <p><span class="prereq-icon dos-mas"></span> Prerrequisito de 2 o más materias</p>
+        <p>TOTAL CRÉDITOS: 140</p>
+        <p>EQUIVALENCIA: 1 CRÉDITO = 48 HORAS</p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
