@@ -73,7 +73,7 @@ h1 {
     width: 100%; /* Ocupar todo el ancho del semestre */
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     box-sizing: border-box; /* Incluir padding y border en el width/height */
-    min-height: 105px; /* AJUSTE CLAVE: Altura mínima aumentada para hacerlas más alargadas */
+    min-height: 140px; /* AJUSTE CLAVE: Altura mínima SIGNIFICATIVAMENTE aumentada */
     display: flex; /* Para centrar el contenido verticalmente */
     flex-direction: column;
     justify-content: center;
@@ -190,7 +190,7 @@ h1 {
         min-width: 200px;
     }
     .asignatura {
-        min-height: 95px; /* Ajuste para pantallas más pequeñas */
+        min-height: 120px; /* Ajuste proporcional para pantallas más pequeñas */
     }
 }
 
@@ -214,7 +214,7 @@ h1 {
     .asignatura {
         padding: 10px;
         margin-bottom: 10px;
-        min-height: 80px; /* Ajuste para pantallas pequeñas */
+        min-height: 100px; /* Ajuste proporcional para pantallas pequeñas */
     }
     .asignatura h3 {
         font-size: 0.8em;
@@ -241,7 +241,7 @@ h1 {
     }
     .asignatura {
         padding: 8px;
-        min-height: 70px; /* Ajuste para móviles */
+        min-height: 80px; /* Ajuste proporcional para móviles */
     }
     .asignatura h3 {
         font-size: 0.7em;
