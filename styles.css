@@ -64,19 +64,184 @@ h1 {
     background-color: #ffffff; /* Blanco para los bloques de asignatura por defecto */
     border: 1px solid #a0d0ff; /* Borde azul claro similar al ejemplo */
     border-radius: 5px;
-    padding: 12px; /* Padding interno para espacio alrededor del texto */
-    margin-bottom: 12px; /* Espacio entre asignaturas */
+    padding: 12px;
+    margin-bottom: 12px;
     text-align: center;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
-    position: relative; /* Para la interactividad y posibles líneas */
-    width: 100%; /* Ocupar todo el ancho del semestre */
+    position: relative;
+    width: 100%;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    box-sizing: border-box; /* Incluir padding y border en el width/height */
-    min-height: 140px; /* AJUSTE CLAVE: Altura mínima SIGNIFICATIVAMENTE aumentada */
-    display: flex; /* Para centrar el contenido verticalmente */
+    box-sizing: border-box;
+    min-height: 140px;
+    display: flex;
     flex-direction: column;
     justify-content: center;
+}
+
+.asignatura h3 {
+    margin: 0;
+    font-size: 0.9em;
+    color: #333;
+    line-height: 1.3;
+}
+
+.asignatura .creditos {
+    display: block;
+    margin-top: 5px;
+    font-size: 0.8em;
+    color: #666;
+    font-weight: bold;
+}
+
+/* Estado de interactividad: Hover */
+.asignatura:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    border-color: #007bff;
+}
+
+/* --- NUEVOS ESTILOS PARA MATERIAS DISPONIBLES --- */
+.asignatura.disponible {
+    background-color: #e0f2f7; /* Un azul verdoso muy claro, indicando disponibilidad */
+    border-color: #00bcd4; /* Un azul cian para el borde */
+    box-shadow: 0 2px 5px rgba(0, 188, 212, 0.2);
+    color: #00838f; /* Texto oscuro para contraste */
+}
+
+.asignatura.disponible h3,
+.asignatura.disponible .creditos,
+.asignatura.disponible .prereq-info {
+    color: #00838f;
+}
+
+
+/* Estilo para materias cursadas (prioridad sobre 'disponible') */
+.asignatura.cursada {
+    background-color: #d4edda; /* Un verde claro para cursadas */
+    border-color: #28a745; /* Borde verde para cursadas */
+    box-shadow: 0 1px 3px rgba(40, 167, 69, 0.2);
+    color: #28a745; /* Texto más oscuro para contraste */
+}
+
+.asignatura.cursada h3,
+.asignatura.cursada .creditos,
+.asignatura.cursada .prereq-info {
+    color: #28a745;
+}
+
+
+/* Materia seleccionada por el usuario (prioridad más alta) */
+.asignatura.selected {
+    background-color: #d1ecf1; /* Color de selección (azul claro) */
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5); /* Anillo azul */
+    color: #007bff; /* Texto azul para contraste */
+}
+
+.asignatura.selected h3,
+.asignatura.selected .creditos,
+.asignatura.selected .prereq-info {
+    color: #007bff;
+}
+
+/* Materias que son prerrequisito de la materia seleccionada */
+.asignatura.prerequisito-active {
+    background-color: #fff3cd; /* Naranja muy claro */
+    border-color: #ffc107; /* Borde naranja */
+    box-shadow: 0 4px 8px rgba(255, 193, 7, 0.2);
+    color: #856404; /* Texto marrón oscuro para contraste */
+}
+
+.asignatura.prerequisito-active h3,
+.asignatura.prerequisito-active .creditos,
+.asignatura.prerequisito-active .prereq-info {
+    color: #856404;
+}
+
+/* Materias que tienen la asignatura seleccionada como prerrequisito (dependencias futuras) */
+.asignatura.dependencia-active {
+    background-color: #e2f0d9; /* Verde más pálido */
+    border-color: #4CAF50; /* Borde verde un poco más oscuro */
+    box-shadow: 0 4px 8px rgba(76, 175, 80, 0.2);
+    color: #388E3C; /* Texto verde oscuro para contraste */
+}
+
+.asignatura.dependencia-active h3,
+.asignatura.dependencia-active .creditos,
+.asignatura.dependencia-active .prereq-info {
+    color: #388E3C;
+}
+
+
+.prereq-info {
+    font-size: 0.75em;
+    color: #888;
+    margin-top: 5px;
+    display: none;
+    white-space: normal;
+}
+
+/* Simbología */
+.simbologia {
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    max-width: 1200px;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    font-size: 0.9em;
+}
+
+.simbologia p {
+    margin: 5px 15px;
+    display: flex;
+    align-items: center;
+}
+
+.prereq-icon {
+    display: inline-block;
+    width: 20px;
+    height: 10px;
+    border-radius: 3px;
+    margin-right: 8px;
+    border: 1px solid #ccc;
+}
+
+/* Ajusta estos colores de los iconos de la simbología para que coincidan con tus clases CSS */
+.prereq-icon.materia {
+    background-color: #ffffff; /* Color por defecto */
+    border-color: #a0d0ff;
+}
+
+.prereq-icon.disponible-simbolo { /* NUEVO ICONO para materias disponibles */
+    background-color: #e0f2f7; /* Coincide con .disponible */
+    border-color: #00bcd4;
+}
+
+.prereq-icon.cursada-simbolo {
+    background-color: #d4edda; /* Coincide con .cursada */
+    border-color: #28a745;
+}
+
+.prereq-icon.seleccionada-simbolo { /* Icono para la materia seleccionada */
+    background-color: #d1ecf1; /* Coincide con .selected */
+    border-color: #007bff;
+}
+
+.prereq-icon.prerequisito-simbolo { /* Icono para prerrequisitos activos */
+    background-color: #fff3cd; /* Coincide con .prerequisito-active */
+    border-color: #ffc107;
+}
+
+.prereq-icon.dependencia-simbolo { /* Icono para dependencias futuras */
+    background-color: #e2f0d9; /* Coincide con .dependencia-active */
+    border-color: #4CAF50;
+}
+
 }
 
 .asignatura h3 {
