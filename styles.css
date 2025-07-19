@@ -1,0 +1,209 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f7f6; /* Un color de fondo suave */
+    color: #333;
+    overflow-x: auto; /* Para permitir el scroll horizontal si la malla es muy ancha */
+}
+
+header {
+    background-color: #007bff; /* Azul vibrante como el ejemplo */
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+h1 {
+    margin: 0;
+    font-size: 2em;
+}
+
+.malla-container {
+    display: grid;
+    /* Define tus columnas aquí. Puedes ajustarlo manualmente o usar auto-fit */
+    /* grid-template-columns: repeat(8, 1fr); /* 8 columnas para 8 semestres */
+    /* Para manejar semestres y categorías transversales, es mejor un grid con áreas o flexbox anidado */
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Columnas responsivas */
+    gap: 20px;
+    padding: 30px;
+    max-width: 1600px; /* Ancho máximo para el contenedor */
+    margin: 20px auto;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    position: relative; /* Necesario para posicionar las líneas de prerrequisitos */
+}
+
+.semestre, .formacion-categoria {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 15px;
+    background-color: #e9f0f6; /* Fondo más claro para los semestres */
+    min-width: 180px; /* Ancho mínimo para cada columna de semestre/categoría */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centrar contenido dentro del semestre */
+}
+
+.semestre h2, .formacion-categoria h3 {
+    margin-top: 0;
+    color: #0056b3;
+    font-size: 1.5em;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.asignatura {
+    background-color: #ffffff; /* Blanco para los bloques de asignatura */
+    border: 1px solid #a0d0ff; /* Borde azul claro similar al ejemplo */
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    position: relative; /* Para la interactividad y posibles líneas */
+    width: 100%; /* Ocupar todo el ancho del semestre/categoría */
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.asignatura h3 {
+    margin: 0;
+    font-size: 0.9em;
+    color: #333;
+    line-height: 1.3;
+}
+
+.asignatura .creditos {
+    display: block;
+    margin-top: 5px;
+    font-size: 0.8em;
+    color: #666;
+    font-weight: bold;
+}
+
+/* Estado de interactividad */
+.asignatura:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    border-color: #007bff;
+}
+
+.asignatura.selected {
+    background-color: #d1ecf1; /* Color de selección */
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
+}
+
+.asignatura.prerequisito-active {
+    outline: 2px solid #28a745; /* Resaltar prerequisitos activos */
+    outline-offset: 2px;
+}
+
+.asignatura.cumple-prerequisito {
+    background-color: #e6ffe6; /* Color para asignaturas cuyos prerrequisitos se cumplen */
+}
+
+.prereq-info {
+    font-size: 0.75em;
+    color: #888;
+    margin-top: 5px;
+    display: block; /* Mostrar por defecto para depuración, luego ocultar */
+}
+
+/* Ocultar información de prerrequisitos por defecto si no están "activas" */
+.asignatura:not(.selected) .prereq-info {
+    display: none;
+}
+
+
+/* Simbología */
+.simbologia {
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    max-width: 1600px;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    font-size: 0.9em;
+}
+
+.simbologia p {
+    margin: 5px 15px;
+    display: flex;
+    align-items: center;
+}
+
+.prereq-icon {
+    display: inline-block;
+    width: 20px;
+    height: 10px;
+    border-radius: 3px;
+    margin-right: 8px;
+}
+
+.prereq-icon.materia {
+    background-color: #a0d0ff; /* Color de una asignatura cualquiera */
+    border: 1px solid #007bff;
+}
+
+.prereq-icon.dos-mas {
+    background-color: #d1ecf1; /* Otro color para diferenciar */
+    border: 1px solid #007bff;
+}
+
+/* Media Queries para Responsividad en Tablets */
+@media (max-width: 1200px) {
+    .malla-container {
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 15px;
+        padding: 20px;
+    }
+}
+
+@media (max-width: 768px) { /* Para tablets más pequeñas en modo retrato */
+    h1 {
+        font-size: 1.5em;
+    }
+    .malla-container {
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 10px;
+        padding: 15px;
+    }
+    .semestre, .formacion-categoria {
+        padding: 10px;
+    }
+    .semestre h2, .formacion-categoria h3 {
+        font-size: 1.2em;
+    }
+    .asignatura h3 {
+        font-size: 0.8em;
+    }
+    .asignatura .creditos {
+        font-size: 0.7em;
+    }
+    .simbologia {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 15px;
+    }
+}
+
+/* Estilos para las líneas de prerrequisito (esto es más complejo y se hará con JS/SVG/Canvas) */
+/* Placeholder para la apariencia de las líneas */
+.prereq-line {
+    position: absolute;
+    background-color: #007bff; /* Color de la línea */
+    z-index: 10;
+    opacity: 0.7;
+}
+
+.prereq-line.active {
+    background-color: #28a745; /* Línea activa */
+    opacity: 1;
+}
