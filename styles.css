@@ -4,11 +4,10 @@ body {
     padding: 0;
     background-color: #f4f7f6; /* Un color de fondo suave */
     color: #333;
-    /* overflow-x: auto; Ya no es necesario aquí */
 }
 
 header {
-    background-color: #007bff; /* Azul vibrante como el ejemplo */
+    background-color: #007bff; /* Azul vibrante */
     color: white;
     padding: 20px 0;
     text-align: center;
@@ -55,7 +54,7 @@ h1 {
     box-sizing: border-box; /* Incluir padding y border en el width/height */
 }
 
-.semestre h2, .formacion-categoria h2 { /* Ahora ambas son h2 para consistencia */
+.semestre h2, .formacion-categoria h2 {
     margin-top: 0;
     color: #0056b3;
     font-size: 1.5em;
@@ -64,7 +63,7 @@ h1 {
 }
 
 .asignatura {
-    background-color: #ffffff; /* Blanco para los bloques de asignatura */
+    background-color: #ffffff; /* Blanco para los bloques de asignatura por defecto */
     border: 1px solid #a0d0ff; /* Borde azul claro similar al ejemplo */
     border-radius: 5px;
     padding: 10px;
@@ -97,22 +96,17 @@ h1 {
     font-weight: bold;
 }
 
-/* Estado de interactividad */
+/* Estado de interactividad: Hover */
 .asignatura:hover {
     transform: translateY(-3px);
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     border-color: #007bff;
 }
 
-.asignatura.selected {
-    background-color: #d1ecf1; /* Color de selección */
-    border-color: #007bff;
-    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
-}
 /* Nuevo estilo para materias cursadas */
 .asignatura.cursada {
-    background-color: #d4edda; /* Un verde claro */
-    border-color: #28a745; /* Borde verde */
+    background-color: #d4edda; /* Un verde claro para cursadas */
+    border-color: #28a745; /* Borde verde para cursadas */
     box-shadow: 0 1px 3px rgba(40, 167, 69, 0.2);
 }
 
@@ -124,20 +118,13 @@ h1 {
     /* Puedes añadir !important si necesitas forzar la prioridad, pero con el orden correcto no debería ser necesario */
 }
 
-/* Asegurarse de que el hover siga funcionando */
-.asignatura:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    border-color: #007bff;
-}
-
 .asignatura.prerequisito-active {
-    outline: 2px solid #28a745; /* Resaltar prerequisitos activos */
+    outline: 2px solid #28a745; /* Resaltar prerrequisitos activos (verde) */
     outline-offset: 2px;
 }
 
 .asignatura.cumple-prerequisito {
-    background-color: #e6ffe6; /* Color para asignaturas cuyos prerrequisitos se cumplen */
+    background-color: #e6ffe6; /* Color para asignaturas cuyos prerrequisitos se cumplen (verde muy claro) */
 }
 
 .prereq-info {
@@ -177,12 +164,12 @@ h1 {
 }
 
 .prereq-icon.materia {
-    background-color: #a0d0ff; /* Color de una asignatura cualquiera */
+    background-color: #a0d0ff; /* Color de una asignatura cualquiera (base azul claro) */
     border: 1px solid #007bff;
 }
 
 .prereq-icon.dos-mas {
-    background-color: #d1ecf1; /* Otro color para diferenciar */
+    background-color: #d1ecf1; /* Otro color para diferenciar (azul claro para selección) */
     border: 1px solid #007bff;
 }
 
