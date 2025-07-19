@@ -101,29 +101,76 @@ h1 {
     border-color: #007bff;
 }
 
-/* Estilo para materias cursadas */
+---
+
+### **Estilos para los diferentes estados de las Asignaturas**
+
+Aquí es donde definimos los colores y otros estilos para las clases que maneja tu JavaScript.
+
+```css
+/* Estilo para materias cursadas (persiste independientemente de la selección) */
 .asignatura.cursada {
     background-color: #d4edda; /* Un verde claro para cursadas */
     border-color: #28a745; /* Borde verde para cursadas */
     box-shadow: 0 1px 3px rgba(40, 167, 69, 0.2);
+    color: #28a745; /* Texto más oscuro para contraste */
 }
 
-/* Prioridad visual: Cuando una asignatura está seleccionada, su color de selección debe dominar */
+/* Asegura que el texto y los créditos cambien de color con el fondo */
+.asignatura.cursada h3,
+.asignatura.cursada .creditos,
+.asignatura.cursada .prereq-info {
+    color: #28a745;
+}
+
+
+/* Materia seleccionada por el usuario (prioridad alta para visibilidad) */
+/* El color azul claro original para 'selected' está bien, pero aseguramos el texto. */
 .asignatura.selected {
     background-color: #d1ecf1; /* Color de selección (azul claro) */
     border-color: #007bff;
-    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5); /* Anillo azul */
+    color: #007bff; /* Texto azul para contraste */
 }
 
+.asignatura.selected h3,
+.asignatura.selected .creditos,
+.asignatura.selected .prereq-info {
+    color: #007bff;
+}
+
+/* Materias que son prerrequisito de la materia seleccionada */
+/* He elegido un naranja suave para estas, indicando que "se necesitan" */
 .asignatura.prerequisito-active {
-    outline: 2px solid #28a745; /* Resaltar prerrequisitos activos (verde) */
-    outline-offset: 2px;
+    background-color: #fff3cd; /* Naranja muy claro */
+    border-color: #ffc107; /* Borde naranja */
+    box-shadow: 0 4px 8px rgba(255, 193, 7, 0.2);
+    color: #856404; /* Texto marrón oscuro para contraste */
 }
 
-.asignatura.cumple-prerequisito {
-    background-color: #e6ffe6; /* Color para asignaturas cuyos prerrequisitos se cumplen (verde muy claro) */
+.asignatura.prerequisito-active h3,
+.asignatura.prerequisito-active .creditos,
+.asignatura.prerequisito-active .prereq-info {
+    color: #856404;
 }
 
+/* Materias que tienen la asignatura seleccionada como prerrequisito (dependencias futuras) */
+/* Un verde más oscuro para estas, indicando un "camino" o "desbloqueo" */
+.asignatura.dependencia-active {
+    background-color: #e2f0d9; /* Verde más pálido */
+    border-color: #4CAF50; /* Borde verde un poco más oscuro */
+    box-shadow: 0 4px 8px rgba(76, 175, 80, 0.2);
+    color: #388E3C; /* Texto verde oscuro para contraste */
+}
+
+.asignatura.dependencia-active h3,
+.asignatura.dependencia-active .creditos,
+.asignatura.dependencia-active .prereq-info {
+    color: #388E3C;
+}
+
+
+/* Asegurar que el prerrequisito-info se vea */
 .prereq-info {
     font-size: 0.75em;
     color: #888;
@@ -158,25 +205,44 @@ h1 {
     height: 10px;
     border-radius: 3px;
     margin-right: 8px;
+    border: 1px solid #ccc; /* Borde genérico */
 }
 
+/* Ajusta estos colores de los iconos de la simbología para que coincidan con tus clases CSS */
+/* Icono para 'Materia' (estado por defecto, o la que se ha clicado sin otros resaltados) */
 .prereq-icon.materia {
-    background-color: #a0d0ff; /* Color de una asignatura cualquiera (base azul claro) */
-    border: 1px solid #007bff;
+    background-color: #d1ecf1; /* Coincide con .selected */
+    border-color: #007bff;
 }
 
+/* Icono para 'Prerrequisito de 2 o más materias' (usaremos este para representar 'prerequisito-active') */
 .prereq-icon.dos-mas {
-    background-color: #d1ecf1; /* Otro color para diferenciar (azul claro para selección) */
-    border: 1px solid #007bff;
+    background-color: #fff3cd; /* Coincide con .prerequisito-active */
+    border-color: #ffc107;
 }
 
-/* Estilos para las líneas de prerrequisito (SVG) */
+/* Si quieres un icono para 'dependencia-active' o 'cursada', agrégalo aquí */
+.prereq-icon.dependencia-futura { /* Nuevo icono para las dependencias futuras */
+    background-color: #e2f0d9; /* Coincide con .dependencia-active */
+    border-color: #4CAF50;
+}
+
+.prereq-icon.cursada-simbolo { /* Nuevo icono para las materias cursadas */
+    background-color: #d4edda; /* Coincide con .cursada */
+    border-color: #28a745;
+}
+
+
+/* Los estilos para las líneas SVG ya no son necesarios si no se dibujan líneas,
+   pero si los dejas, no harán nada si el JS no las crea.
+   Los dejo por si en el futuro decides reactivarlos: */
 .prereq-svg-line {
     position: absolute;
-    pointer-events: none; /* Para que no bloquee los clics en las asignaturas */
-    z-index: 5; /* Asegura que estén por debajo de las asignaturas */
-    overflow: visible; /* Permite que la línea se dibuje fuera del SVG container si es necesario */
+    pointer-events: none;
+    z-index: 5;
+    overflow: visible;
 }
+
 
 /* Media Queries para Responsividad en Tablets y Pantallas Pequeñas */
 @media (max-width: 1200px) {
