@@ -1,8 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const asignaturas = document.querySelectorAll('.asignatura');
     const mallaContainer = document.querySelector('.malla-container');
-    // activeLines ya no es estrictamente necesario para dibujar, pero se mantiene clearLines
-    let activeLines = []; 
+    let activeLines = []; // Se mantiene para clearLines, aunque no se dibujen SVGs
 
     // --- Funciones de Utilidad ---
 
@@ -15,27 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 
-    // drawLine ya no es necesaria, la mantenemos comentada o la podrías borrar
-    /*
-    const getElementCoords = (element) => {
-        const rect = element.getBoundingClientRect();
-        return {
-            top: rect.top + window.scrollY,
-            left: rect.left + window.scrollX,
-            width: rect.width,
-            height: rect.height,
-            right: rect.right + window.scrollX,
-            bottom: rect.bottom + window.scrollY
-        };
-    };
-
-    const drawLine = (startElement, endElement, isPrereq = false) => {
-        // Esta función ya no se llama, pero si la necesitaras para depurar, aquí está el contenido original.
-        // ... (código original de drawLine) ...
-    };
-    */
-
-    // clearLines ahora solo asegura que no haya SVGs residuales si alguna vez se dibujaron
     const clearLines = () => {
         activeLines.forEach(line => line.remove());
         activeLines = [];
@@ -68,6 +46,45 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem(CURSADAS_STORAGE_KEY, JSON.stringify(cursadasIds));
     };
 
+    // --- NUEVA FUNCIÓN: Actualizar materias disponibles ---
+    const updateAvailableSubjects = () => {
+        // Primero, limpiar el estado 'disponible' de todas las asignaturas
+        asignaturas.forEach(asignatura => {
+            asignatura.classList.remove('disponible');
+        });
+
+        asignaturas.forEach(asignatura => {
+            // Si la asignatura ya está cursada, no la marcamos como disponible
+            if (asignatura.classList.contains('cursada')) {
+                return;
+            }
+
+            const prereqIds = asignatura.dataset.prerequisito;
+
+            // Si no tiene prerrequisitos, y no está cursada, está disponible
+            if (!prereqIds) {
+                asignatura.classList.add('disponible');
+                return;
+            }
+
+            // Si tiene prerrequisitos, verificar si todos están cursados
+            const requiredPrereqs = prereqIds.split(',').map(id => id.trim());
+            let allPrereqsMet = true;
+
+            for (const prereqId of requiredPrereqs) {
+                const prereqElement = document.querySelector(`.asignatura[data-id="${prereqId}"]`);
+                if (!prereqElement || !prereqElement.classList.contains('cursada')) {
+                    allPrereqsMet = false; // Al menos un prerrequisito no está cursado
+                    break;
+                }
+            }
+
+            if (allPrereqsMet) {
+                asignatura.classList.add('disponible');
+            }
+        });
+    };
+
     // --- Lógica Principal de Interacción ---
 
     asignaturas.forEach(asignatura => {
@@ -77,11 +94,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Alternar el estado "cursada"
             currentAsignatura.classList.toggle('cursada');
-            saveCursadasState();
+            saveCursadasState(); // Guardar el nuevo estado
+
+            // !!! IMPORTANTE: Llamar a updateAvailableSubjects después de cambiar el estado de 'cursada'
+            updateAvailableSubjects();
 
             // Deseleccionar todas las asignaturas y limpiar resaltados previos
             asignaturas.forEach(item => {
-                item.classList.remove('selected', 'prerequisito-active', 'dependencia-active'); // Eliminamos 'cumple-prerequisito' y añadimos 'dependencia-active'
+                item.classList.remove('selected', 'prerequisito-active', 'dependencia-active');
                 const prereqInfo = item.querySelector('.prereq-info');
                 if (prereqInfo) {
                     prereqInfo.style.display = 'none';
@@ -137,11 +157,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Inicialización al cargar la página ---
 
-    loadCursadasState();
+    loadCursadasState(); // Cargar el estado al inicio
+    updateAvailableSubjects(); // !!! IMPORTANTE: Llamar al inicio para establecer el estado inicial de disponibilidad
 
     // El debouncedRedrawLines ya no es esencial para líneas, pero se mantiene para la lógica de resaltado
     const debouncedRedrawLines = debounce(() => {
         clearLines(); // Limpiar cualquier SVG residual
+        updateAvailableSubjects(); // !!! IMPORTANTE: Re-evaluar disponibilidad en resize/scroll
+
         const selectedAsignatura = document.querySelector('.asignatura.selected');
         if (selectedAsignatura) {
             // Repetir la lógica de resaltado de clases si hay una asignatura seleccionada
