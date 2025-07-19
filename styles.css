@@ -4,7 +4,7 @@ body {
     padding: 0;
     background-color: #f4f7f6; /* Un color de fondo suave */
     color: #333;
-    overflow-x: auto; /* Para permitir el scroll horizontal si la malla es muy ancha */
+    /* overflow-x: auto; Ya no es necesario aquí */
 }
 
 header {
@@ -20,20 +20,27 @@ h1 {
     font-size: 2em;
 }
 
+/* Nuevo contenedor para el desplazamiento horizontal */
+.malla-scroll-wrapper {
+    overflow-x: auto; /* Permite el scroll horizontal si el contenido es demasiado ancho */
+    -webkit-overflow-scrolling: touch; /* Suaviza el scroll en iOS */
+    padding-bottom: 20px; /* Espacio para la barra de scroll */
+}
+
 .malla-container {
     display: grid;
-    /* Define tus columnas aquí. Puedes ajustarlo manualmente o usar auto-fit */
-    /* grid-template-columns: repeat(8, 1fr); /* 8 columnas para 8 semestres */
-    /* Para manejar semestres y categorías transversales, es mejor un grid con áreas o flexbox anidado */
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Columnas responsivas */
+    /* Define explícitamente el número de columnas para forzar el ancho y el scroll */
+    /* Tenemos 7 semestres + 4 categorías transversales = 11 columnas */
+    grid-template-columns: repeat(11, minmax(180px, 1fr)); /* 11 columnas con ancho mínimo de 180px */
     gap: 20px;
     padding: 30px;
-    max-width: 1600px; /* Ancho máximo para el contenedor */
-    margin: 20px auto;
+    min-width: calc(11 * 180px + 10 * 20px); /* Ancho mínimo para forzar el scroll */
+    margin: 20px auto; /* Centrar en el espacio disponible */
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     position: relative; /* Necesario para posicionar las líneas de prerrequisitos */
+    justify-content: start; /* Asegura que los ítems inicien desde el principio del grid */
 }
 
 .semestre, .formacion-categoria {
@@ -45,9 +52,10 @@ h1 {
     display: flex;
     flex-direction: column;
     align-items: center; /* Centrar contenido dentro del semestre */
+    box-sizing: border-box; /* Incluir padding y border en el width/height */
 }
 
-.semestre h2, .formacion-categoria h3 {
+.semestre h2, .formacion-categoria h2 { /* Ahora ambas son h2 para consistencia */
     margin-top: 0;
     color: #0056b3;
     font-size: 1.5em;
@@ -67,6 +75,11 @@ h1 {
     position: relative; /* Para la interactividad y posibles líneas */
     width: 100%; /* Ocupar todo el ancho del semestre/categoría */
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    box-sizing: border-box; /* Incluir padding y border en el width/height */
+    min-height: 80px; /* Altura mínima para asegurar visibilidad */
+    display: flex; /* Para centrar el contenido verticalmente */
+    flex-direction: column;
+    justify-content: center;
 }
 
 .asignatura h3 {
@@ -110,14 +123,9 @@ h1 {
     font-size: 0.75em;
     color: #888;
     margin-top: 5px;
-    display: block; /* Mostrar por defecto para depuración, luego ocultar */
+    display: none; /* Ocultar por defecto, se muestra con JS al seleccionar */
+    white-space: normal; /* Asegura que el texto se ajuste */
 }
-
-/* Ocultar información de prerrequisitos por defecto si no están "activas" */
-.asignatura:not(.selected) .prereq-info {
-    display: none;
-}
-
 
 /* Simbología */
 .simbologia {
@@ -126,7 +134,7 @@ h1 {
     border: 1px solid #ddd;
     border-radius: 8px;
     background-color: #f9f9f9;
-    max-width: 1600px;
+    max-width: 1200px; /* Un ancho razonable para la simbología */
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
@@ -157,10 +165,20 @@ h1 {
     border: 1px solid #007bff;
 }
 
-/* Media Queries para Responsividad en Tablets */
+/* Estilos para las líneas de prerrequisito (SVG) */
+.prereq-svg-line {
+    position: absolute;
+    pointer-events: none; /* Para que no bloquee los clics en las asignaturas */
+    z-index: 5; /* Asegura que estén por debajo de las asignaturas */
+    overflow: visible; /* Permite que la línea se dibuje fuera del SVG container si es necesario */
+}
+
+/* Media Queries para Responsividad en Tablets y Pantallas Pequeñas */
 @media (max-width: 1200px) {
     .malla-container {
-        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        /* Permite que las columnas sean más estrechas antes de que el scroll tome el control */
+        grid-template-columns: repeat(11, minmax(160px, 1fr));
+        min-width: calc(11 * 160px + 10 * 15px); /* Ajusta el min-width */
         gap: 15px;
         padding: 20px;
     }
@@ -171,14 +189,15 @@ h1 {
         font-size: 1.5em;
     }
     .malla-container {
-        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        grid-template-columns: repeat(11, minmax(120px, 1fr)); /* Columnas aún más estrechas */
+        min-width: calc(11 * 120px + 10 * 10px); /* Ajusta el min-width */
         gap: 10px;
         padding: 15px;
     }
     .semestre, .formacion-categoria {
         padding: 10px;
     }
-    .semestre h2, .formacion-categoria h3 {
+    .semestre h2, .formacion-categoria h2 {
         font-size: 1.2em;
     }
     .asignatura h3 {
@@ -194,16 +213,21 @@ h1 {
     }
 }
 
-/* Estilos para las líneas de prerrequisito (esto es más complejo y se hará con JS/SVG/Canvas) */
-/* Placeholder para la apariencia de las líneas */
-.prereq-line {
-    position: absolute;
-    background-color: #007bff; /* Color de la línea */
-    z-index: 10;
-    opacity: 0.7;
-}
-
-.prereq-line.active {
-    background-color: #28a745; /* Línea activa */
-    opacity: 1;
+@media (max-width: 480px) { /* Para móviles */
+    h1 {
+        font-size: 1.2em;
+    }
+    .malla-container {
+        grid-template-columns: repeat(11, minmax(100px, 1fr)); /* Mínimo para móviles */
+        min-width: calc(11 * 100px + 10 * 8px);
+        gap: 8px;
+        padding: 10px;
+    }
+    .asignatura {
+        padding: 8px;
+        min-height: 70px;
+    }
+    .asignatura h3 {
+        font-size: 0.7em;
+    }
 }
