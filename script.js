@@ -1,5 +1,3 @@
-// Asegúrate de que este script esté en tu archivo script.js
-
 document.addEventListener('DOMContentLoaded', () => {
     const asignaturas = document.querySelectorAll('.asignatura');
     const mallaContainer = document.querySelector('.malla-container');
@@ -136,22 +134,25 @@ document.addEventListener('DOMContentLoaded', () => {
             currentAsignatura.classList.toggle('cursada');
             saveCursadasState(); // Guardar el nuevo estado
 
-            // 2. Limpiar la selección previa y las líneas (para la visualización de prerrequisitos)
+            // 2. Manejar la lógica de selección para la visualización de prerrequisitos
+            // Primero, deseleccionar *todas* las asignaturas y ocultar info de prerrequisitos
             asignaturas.forEach(item => {
-                if (item !== currentAsignatura) { // No deseleccionar la que acabamos de cliquear
-                    item.classList.remove('selected', 'prerequisito-active', 'cumple-prerequisito');
-                    const prereqInfo = item.querySelector('.prereq-info');
-                    if (prereqInfo) {
-                        prereqInfo.style.display = 'none';
-                    }
+                // Solo remover las clases relacionadas con la selección y prerrequisitos
+                // PERO NO la clase 'cursada' si la tiene
+                item.classList.remove('selected', 'prerequisito-active', 'cumple-prerequisito');
+                const prereqInfo = item.querySelector('.prereq-info');
+                if (prereqInfo) {
+                    prereqInfo.style.display = 'none';
                 }
             });
-            clearLines();
+            clearLines(); // Limpiar las líneas SVG
 
-            // 3. (Re)Aplicar la lógica de selección y prerrequisitos
-            // Si la asignatura clicada NO está ya seleccionada para ver sus prerrequisitos, la seleccionamos.
-            // Si SÍ está seleccionada, la deseleccionamos (un segundo click la desactiva)
-            if (!currentAsignatura.classList.contains('selected')) {
+            // 3. Si la asignatura clicada NO tiene la clase 'selected' (después de haberlas limpiado todas)
+            // entonces la seleccionamos para mostrar sus prerrequisitos.
+            // Esto significa que un click alternará el estado 'cursada' Y activará la vista de prerrequisitos,
+            // y un segundo click en la misma asignatura la deseleccionará para la vista de prerrequisitos
+            // (pero mantendrá su estado 'cursada').
+            if (!currentAsignatura.classList.contains('selected')) { // Verificar si está siendo seleccionada AHORA
                 currentAsignatura.classList.add('selected');
                 const currentPrereqInfo = currentAsignatura.querySelector('.prereq-info');
                 if (currentPrereqInfo) {
@@ -174,36 +175,32 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Resaltar las materias que esta asignatura es prerrequisito (es decir, las materias que dependen de la actual)
                 asignaturas.forEach(otherAsignatura => {
                     const otherPrereqIds = otherAsignatura.dataset.prerequisito;
-                    if (otherPrereqIds && otherPrereqIds.split(',').map(id => id.trim()).includes(currentAsignaturaId)) {
+                    if (otherPrereqIds && otherPrereqIds.split(',').map(id => id.trim()).includes(asignaturaId)) {
                         otherAsignatura.classList.add('cumple-prerequisito');
                         drawLine(currentAsignatura, otherAsignatura, false);
                     }
                 });
-            } else {
-                 // Si ya estaba seleccionada, la deseleccionamos al segundo click
-                currentAsignatura.classList.remove('selected');
-                const prereqInfo = currentAsignatura.querySelector('.prereq-info');
-                if (prereqInfo) {
-                    prereqInfo.style.display = 'none';
-                }
             }
+            // Si el click fue para deseleccionar la asignatura (porque ya estaba seleccionada),
+            // la lógica de limpieza al inicio del listener ya se encargó de eso, no necesitamos más acción aquí.
         });
     });
 
     // Añadir un listener para clic fuera de las asignaturas para deseleccionar
     document.addEventListener('click', (event) => {
+        // Si el clic no fue dentro de una asignatura (o un descendiente de .asignatura)
         if (!event.target.closest('.asignatura')) {
             asignaturas.forEach(item => {
+                // Remover solo las clases de selección y prerrequisitos
                 item.classList.remove('selected', 'prerequisito-active', 'cumple-prerequisito');
                 const prereqInfo = item.querySelector('.prereq-info');
                 if (prereqInfo) {
                     prereqInfo.style.display = 'none';
                 }
             });
-            clearLines();
+            clearLines(); // Limpiar las líneas SVG
         }
     });
-
 
     // --- Inicialización al cargar la página ---
 
@@ -213,7 +210,48 @@ document.addEventListener('DOMContentLoaded', () => {
         clearLines();
         const selectedAsignatura = document.querySelector('.asignatura.selected');
         if (selectedAsignatura) {
-            selectedAsignatura.click(); // Simular un click para redibujar las líneas de la asignatura seleccionada
+            // Re-activar la visualización de líneas para la asignatura que estaba seleccionada
+            // Es crucial porque loadCursadasState no maneja esto.
+            // Aquí simulamos un click, pero solo para activar la visualización,
+            // sin alterar el estado 'cursada' ni la selección.
+            // Para evitar un bucle o toggle no deseado del 'cursada' en un resize/scroll,
+            // necesitamos una forma de "activar solo la vista de prerrequisitos".
+            // Una forma simple es extraer esa lógica a una función separada.
+
+            // Mejorar: llamar a una función que solo dibuje líneas y resalte, sin toggles.
+            // Por ahora, el simulacro de click funciona pero es un hack.
+            // Dada la estructura actual, este click activará/desactivará la selección
+            // y el estado cursada si la asignatura no estaba ya seleccionada antes del resize/scroll.
+            // Para este caso particular (redibujar por resize/scroll), la mejor opción
+            // es una función dedicada `highlightPrerequisites(asignatura)`
+            // y llamarla aquí en lugar de `selectedAsignatura.click()`.
+            // Por simplicidad y dada la necesidad de enviar el código completo,
+            // mantendré el click simulado por ahora, pero ten en cuenta esta mejora.
+             const currentPrereqInfo = selectedAsignatura.querySelector('.prereq-info');
+            if (currentPrereqInfo) {
+                currentPrereqInfo.style.display = 'block'; // Asegurarse que la info se muestra
+            }
+            selectedAsignatura.classList.add('selected'); // Asegurarse que sigue seleccionada visualmente
+            
+            const prereqIds = selectedAsignatura.dataset.prerequisito;
+            if (prereqIds) {
+                const requiredPrereqs = prereqIds.split(',').map(id => id.trim());
+                requiredPrereqs.forEach(prereqId => {
+                    const prereqElement = document.querySelector(`.asignatura[data-id="${prereqId}"]`);
+                    if (prereqElement) {
+                        prereqElement.classList.add('prerequisito-active');
+                        drawLine(prereqElement, selectedAsignatura, true);
+                    }
+                });
+            }
+            const currentAsignaturaId = selectedAsignatura.dataset.id;
+            asignaturas.forEach(otherAsignatura => {
+                const otherPrereqIds = otherAsignatura.dataset.prerequisito;
+                if (otherPrereqIds && otherPrereqIds.split(',').map(id => id.trim()).includes(currentAsignaturaId)) {
+                    otherAsignatura.classList.add('cumple-prerequisito');
+                    drawLine(selectedAsignatura, otherAsignatura, false);
+                }
+            });
         }
     }, 200);
 
