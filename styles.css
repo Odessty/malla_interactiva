@@ -28,12 +28,13 @@ h1 {
 
 .malla-container {
     display: grid;
-    /* Define explícitamente el número de columnas para forzar el ancho y el scroll */
-    /* Tenemos 7 semestres + 4 categorías transversales = 11 columnas */
-    grid-template-columns: repeat(11, minmax(180px, 1fr)); /* 11 columnas con ancho mínimo de 180px */
+    /* --- CORRECCIÓN IMPORTANTE AQUÍ --- */
+    /* Ahora son 8 semestres, por lo que el grid tiene 8 columnas */
+    grid-template-columns: repeat(8, minmax(200px, 1fr)); /* 8 columnas con ancho mínimo de 200px */
     gap: 20px;
     padding: 30px;
-    min-width: calc(11 * 180px + 10 * 20px); /* Ancho mínimo para forzar el scroll */
+    /* --- CORRECCIÓN IMPORTANTE AQUÍ --- */
+    min-width: calc(8 * 200px + 7 * 20px); /* Ancho mínimo para forzar el scroll (8 columnas * 200px + 7 gaps * 20px) */
     margin: 20px auto; /* Centrar en el espacio disponible */
     background-color: #fff;
     border-radius: 8px;
@@ -42,19 +43,19 @@ h1 {
     justify-content: start; /* Asegura que los ítems inicien desde el principio del grid */
 }
 
-.semestre, .formacion-categoria {
+.semestre { /* Ya no hay .formacion-categoria, solo .semestre */
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 15px;
     background-color: #e9f0f6; /* Fondo más claro para los semestres */
-    min-width: 180px; /* Ancho mínimo para cada columna de semestre/categoría */
+    min-width: 200px; /* Ancho mínimo para cada columna de semestre */
     display: flex;
     flex-direction: column;
     align-items: center; /* Centrar contenido dentro del semestre */
     box-sizing: border-box; /* Incluir padding y border en el width/height */
 }
 
-.semestre h2, .formacion-categoria h2 {
+.semestre h2 { /* Ya no hay .formacion-categoria h2 */
     margin-top: 0;
     color: #0056b3;
     font-size: 1.5em;
@@ -72,7 +73,7 @@ h1 {
     cursor: pointer;
     transition: all 0.2s ease-in-out;
     position: relative; /* Para la interactividad y posibles líneas */
-    width: 100%; /* Ocupar todo el ancho del semestre/categoría */
+    width: 100%; /* Ocupar todo el ancho del semestre */
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     box-sizing: border-box; /* Incluir padding y border en el width/height */
     min-height: 80px; /* Altura mínima para asegurar visibilidad */
@@ -103,7 +104,7 @@ h1 {
     border-color: #007bff;
 }
 
-/* Nuevo estilo para materias cursadas */
+/* Estilo para materias cursadas */
 .asignatura.cursada {
     background-color: #d4edda; /* Un verde claro para cursadas */
     border-color: #28a745; /* Borde verde para cursadas */
@@ -115,7 +116,6 @@ h1 {
     background-color: #d1ecf1; /* Color de selección (azul claro) */
     border-color: #007bff;
     box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
-    /* Puedes añadir !important si necesitas forzar la prioridad, pero con el orden correcto no debería ser necesario */
 }
 
 .asignatura.prerequisito-active {
@@ -184,9 +184,9 @@ h1 {
 /* Media Queries para Responsividad en Tablets y Pantallas Pequeñas */
 @media (max-width: 1200px) {
     .malla-container {
-        /* Permite que las columnas sean más estrechas antes de que el scroll tome el control */
-        grid-template-columns: repeat(11, minmax(160px, 1fr));
-        min-width: calc(11 * 160px + 10 * 15px); /* Ajusta el min-width */
+        /* --- CORRECCIÓN IMPORTANTE AQUÍ --- */
+        grid-template-columns: repeat(8, minmax(180px, 1fr));
+        min-width: calc(8 * 180px + 7 * 15px);
         gap: 15px;
         padding: 20px;
     }
@@ -197,15 +197,16 @@ h1 {
         font-size: 1.5em;
     }
     .malla-container {
-        grid-template-columns: repeat(11, minmax(120px, 1fr)); /* Columnas aún más estrechas */
-        min-width: calc(11 * 120px + 10 * 10px); /* Ajusta el min-width */
+        /* --- CORRECCIÓN IMPORTANTE AQUÍ --- */
+        grid-template-columns: repeat(8, minmax(140px, 1fr)); /* Columnas aún más estrechas */
+        min-width: calc(8 * 140px + 7 * 10px); /* Ajusta el min-width */
         gap: 10px;
         padding: 15px;
     }
-    .semestre, .formacion-categoria {
+    .semestre { /* Ya no .formacion-categoria */
         padding: 10px;
     }
-    .semestre h2, .formacion-categoria h2 {
+    .semestre h2 {
         font-size: 1.2em;
     }
     .asignatura h3 {
@@ -226,8 +227,9 @@ h1 {
         font-size: 1.2em;
     }
     .malla-container {
-        grid-template-columns: repeat(11, minmax(100px, 1fr)); /* Mínimo para móviles */
-        min-width: calc(11 * 100px + 10 * 8px);
+        /* --- CORRECCIÓN IMPORTANTE AQUÍ --- */
+        grid-template-columns: repeat(8, minmax(120px, 1fr)); /* Mínimo para móviles */
+        min-width: calc(8 * 120px + 7 * 8px);
         gap: 8px;
         padding: 10px;
     }
