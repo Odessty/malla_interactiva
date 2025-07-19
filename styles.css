@@ -28,11 +28,9 @@ h1 {
 
 .malla-container {
     display: grid;
-    /* Ajuste: columnas ligeramente más anchas para más espacio */
     grid-template-columns: repeat(8, minmax(220px, 1fr)); /* 8 columnas con ancho mínimo de 220px */
-    gap: 25px; /* Ajuste: un poco más de espacio entre columnas */
+    gap: 25px; /* Un poco más de espacio entre columnas */
     padding: 30px;
-    /* Ajuste: min-width acorde al nuevo ancho de columna */
     min-width: calc(8 * 220px + 7 * 25px); /* 8 columnas * 220px + 7 gaps * 25px */
     margin: 20px auto; /* Centrar en el espacio disponible */
     background-color: #fff;
@@ -47,7 +45,7 @@ h1 {
     border-radius: 5px;
     padding: 15px;
     background-color: #e9f0f6; /* Fondo más claro para los semestres */
-    min-width: 220px; /* Ajuste: ancho mínimo para cada columna de semestre */
+    min-width: 220px; /* Ancho mínimo para cada columna de semestre */
     display: flex;
     flex-direction: column;
     align-items: center; /* Centrar contenido dentro del semestre */
@@ -66,8 +64,8 @@ h1 {
     background-color: #ffffff; /* Blanco para los bloques de asignatura por defecto */
     border: 1px solid #a0d0ff; /* Borde azul claro similar al ejemplo */
     border-radius: 5px;
-    padding: 12px; /* Ajuste: más padding interno para espacio alrededor del texto */
-    margin-bottom: 12px; /* Ajuste: más espacio entre asignaturas */
+    padding: 12px; /* Padding interno para espacio alrededor del texto */
+    margin-bottom: 12px; /* Espacio entre asignaturas */
     text-align: center;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
@@ -75,7 +73,7 @@ h1 {
     width: 100%; /* Ocupar todo el ancho del semestre */
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     box-sizing: border-box; /* Incluir padding y border en el width/height */
-    min-height: 85px; /* Ajuste: altura mínima para asegurar visibilidad */
+    min-height: 105px; /* AJUSTE CLAVE: Altura mínima aumentada para hacerlas más alargadas */
     display: flex; /* Para centrar el contenido verticalmente */
     flex-direction: column;
     justify-content: center;
@@ -183,13 +181,16 @@ h1 {
 /* Media Queries para Responsividad en Tablets y Pantallas Pequeñas */
 @media (max-width: 1200px) {
     .malla-container {
-        grid-template-columns: repeat(8, minmax(200px, 1fr)); /* Ajuste para pantallas un poco más pequeñas */
+        grid-template-columns: repeat(8, minmax(200px, 1fr));
         min-width: calc(8 * 200px + 7 * 20px);
         gap: 20px;
         padding: 20px;
     }
     .semestre {
         min-width: 200px;
+    }
+    .asignatura {
+        min-height: 95px; /* Ajuste para pantallas más pequeñas */
     }
 }
 
@@ -198,7 +199,7 @@ h1 {
         font-size: 1.5em;
     }
     .malla-container {
-        grid-template-columns: repeat(8, minmax(150px, 1fr)); /* Columnas aún más estrechas */
+        grid-template-columns: repeat(8, minmax(150px, 1fr));
         min-width: calc(8 * 150px + 7 * 10px);
         gap: 10px;
         padding: 15px;
@@ -211,9 +212,9 @@ h1 {
         font-size: 1.2em;
     }
     .asignatura {
-        padding: 10px; /* Ajuste: reducir padding en pantallas más pequeñas */
-        margin-bottom: 10px; /* Ajuste: reducir margen en pantallas más pequeñas */
-        min-height: 75px; /* Ajuste: reducir altura mínima */
+        padding: 10px;
+        margin-bottom: 10px;
+        min-height: 80px; /* Ajuste para pantallas pequeñas */
     }
     .asignatura h3 {
         font-size: 0.8em;
@@ -233,14 +234,14 @@ h1 {
         font-size: 1.2em;
     }
     .malla-container {
-        grid-template-columns: repeat(8, minmax(110px, 1fr)); /* Mínimo para móviles */
+        grid-template-columns: repeat(8, minmax(110px, 1fr));
         min-width: calc(8 * 110px + 7 * 8px);
         gap: 8px;
         padding: 10px;
     }
     .asignatura {
         padding: 8px;
-        min-height: 65px;
+        min-height: 70px; /* Ajuste para móviles */
     }
     .asignatura h3 {
         font-size: 0.7em;
