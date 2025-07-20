@@ -1,68 +1,108 @@
+/* Variables CSS para una gestión de colores más fácil */
+:root {
+    --color-fondo-general: #FFF5F7; /* Rosa muy pálido, casi blanco */
+    --color-fondo-semestre: #FCE4EC; /* Rosa pastel claro */
+    --color-borde-semestre: #F8BBD0; /* Rosa pastel medio */
+
+    --color-asignatura-default: #FFECF0; /* Rosa suave/durazno para materia estándar */
+    --color-borde-asignatura-default: #F06292; /* Rosa frambuesa suave */
+    --color-sombra-asignatura-default: rgba(240, 98, 146, 0.1);
+
+    --color-asignatura-disponible: #E1F5FE; /* Azul celeste muy claro, alternativa al rosa para diferenciación clara, o usar #F4EEF7 (lila) */
+    --color-borde-asignatura-disponible: #81D4FA; /* Azul cielo claro, o usar #B9B4D7 (lila más oscuro) */
+    --color-sombra-asignatura-disponible: rgba(129, 212, 250, 0.3); /* o rgba(185, 180, 215, 0.3) */
+    --color-texto-disponible: #01579B; /* Azul oscuro para contraste, o usar #5B4F8B (morado oscuro) */
+
+
+    --color-asignatura-cursada: #E8F5E9; /* Verde menta muy suave para cursadas */
+    --color-borde-asignatura-cursada: #81C784; /* Verde suave para cursadas */
+    --color-sombra-asignatura-cursada: rgba(129, 199, 132, 0.3);
+    --color-texto-cursada: #388E3C; /* Verde oscuro para contraste */
+
+    --color-asignatura-selected: #F8BBD0; /* Rosa medio/ciruela claro para selección */
+    --color-borde-asignatura-selected: #F06292; /* Rosa más intenso para borde de selección */
+    --color-sombra-asignatura-selected: rgba(240, 98, 146, 0.5);
+    --color-texto-selected: #D81B60; /* Rosa oscuro para contraste */
+
+    --color-asignatura-prerequisito-active: #FFFDE7; /* Crema/beige muy suave */
+    --color-borde-asignatura-prerequisito-active: #FFD54F; /* Amarillo suave/mostaza */
+    --color-sombra-asignatura-prerequisito-active: rgba(255, 213, 79, 0.2);
+    --color-texto-prerequisito-active: #C28B00; /* Marrón oscuro para contraste */
+
+    --color-asignatura-dependencia-active: #F3E5F5; /* Lila muy pálido para dependencias futuras */
+    --color-borde-asignatura-dependencia-active: #BA68C8; /* Morado claro */
+    --color-sombra-asignatura-dependencia-active: rgba(186, 104, 200, 0.2);
+    --color-texto-dependencia-active: #8E24AA; /* Morado oscuro para contraste */
+
+    --color-texto-general: #333333; /* Gris muy oscuro para texto principal */
+    --color-texto-secundario: #666666; /* Gris medio para texto secundario */
+    --color-texto-contraste-claro: #F06292; /* Rosa contrastante para créditos/info */
+    --color-borde-separador: #F8BBD0; /* Rosa pastel para bordes/líneas */
+}
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #E6A4DB; /* Un color de fondo suave */
-    color: #333;
+    background-color: var(--color-fondo-general); /* Fondo general de la página */
+    color: var(--color-texto-general);
+    line-height: 1.6;
 }
 
 header {
-    background-color: #E6A4DB; /* Azul vibrante */
-    color: white;
+    background-color: var(--color-fondo-semestre); /* Un rosa pastel para el header */
+    color: var(--color-texto-general);
     padding: 20px 0;
     text-align: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
 }
 
 h1 {
     margin: 0;
     font-size: 2em;
+    color: var(--color-texto-general);
 }
 
-/* Nuevo contenedor para el desplazamiento horizontal */
 .malla-scroll-wrapper {
-    overflow-x: auto; /* Permite el scroll horizontal si el contenido es demasiado ancho */
-    -webkit-overflow-scrolling: touch; /* Suaviza el scroll en iOS */
+    overflow-x: auto; /* Permite el scroll horizontal */
     padding-bottom: 20px; /* Espacio para la barra de scroll */
+    -webkit-overflow-scrolling: touch; /* Suaviza el scroll en iOS */
 }
 
 .malla-container {
     display: grid;
-    grid-template-columns: repeat(8, minmax(220px, 1fr)); /* 8 columnas con ancho mínimo de 220px */
-    gap: 25px; /* Un poco más de espacio entre columnas */
-    padding: 30px;
-    min-width: calc(8 * 220px + 7 * 25px); /* 8 columnas * 220px + 7 gaps * 25px */
-    margin: 20px auto; /* Centrar en el espacio disponible */
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    position: relative; /* Necesario para posicionar las líneas de prerrequisitos */
-    justify-content: start; /* Asegura que los ítems inicien desde el principio del grid */
+    grid-auto-flow: column; /* Organiza los semestres en columnas */
+    grid-auto-columns: minmax(250px, 1fr); /* Ancho mínimo para cada columna de semestre */
+    gap: 20px; /* Espacio entre semestres */
+    padding: 20px;
+    min-width: fit-content; /* Asegura que el contenedor crezca con las columnas */
+    justify-content: start; /* Alinea los semestres al inicio */
 }
 
 .semestre {
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    background-color: var(--color-fondo-semestre); /* Fondo de cada columna de semestre */
+    border: 1px solid var(--color-borde-semestre); /* Borde para el semestre */
+    border-radius: 8px;
     padding: 15px;
-    background-color: #e9f0f6; /* Fondo más claro para los semestres */
-    min-width: 220px; /* Ancho mínimo para cada columna de semestre */
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Centrar contenido dentro del semestre */
-    box-sizing: border-box; /* Incluir padding y border en el width/height */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    min-width: 250px; /* Mínimo ancho para la columna del semestre */
 }
 
 .semestre h2 {
-    margin-top: 0;
-    color: #0056b3;
-    font-size: 1.5em;
     text-align: center;
+    color: var(--color-texto-general);
+    margin-top: 0;
     margin-bottom: 15px;
+    font-size: 1.5em;
+    border-bottom: 2px solid var(--color-borde-semestre);
+    padding-bottom: 10px;
 }
 
+/* Materia por defecto */
 .asignatura {
-    background-color: #ffffff; /* Blanco para los bloques de asignatura por defecto */
-    border: 1px solid #a0d0ff; /* Borde azul claro similar al ejemplo */
+    background-color: var(--color-asignatura-default);
+    border: 1px solid var(--color-borde-asignatura-default);
     border-radius: 5px;
     padding: 12px;
     margin-bottom: 12px;
@@ -71,18 +111,19 @@ h1 {
     transition: all 0.2s ease-in-out;
     position: relative;
     width: 100%;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 3px var(--color-sombra-asignatura-default);
     box-sizing: border-box;
     min-height: 140px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    color: var(--color-texto-general); /* Color de texto por defecto */
 }
 
 .asignatura h3 {
     margin: 0;
     font-size: 0.9em;
-    color: #333;
+    color: var(--color-texto-general);
     line-height: 1.3;
 }
 
@@ -90,93 +131,93 @@ h1 {
     display: block;
     margin-top: 5px;
     font-size: 0.8em;
-    color: #666;
+    color: var(--color-texto-secundario);
     font-weight: bold;
 }
 
 /* Estado de interactividad: Hover */
 .asignatura:hover {
     transform: translateY(-3px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    border-color: #007bff;
+    box-shadow: 0 4px 8px var(--color-sombra-asignatura-default);
+    border-color: var(--color-borde-asignatura-default);
 }
 
-/* --- NUEVOS ESTILOS PARA MATERIAS DISPONIBLES --- */
+/* --- ESTILOS PARA MATERIAS DISPONIBLES --- */
 .asignatura.disponible {
-    background-color: #e0f2f7; /* Un azul verdoso muy claro, indicando disponibilidad */
-    border-color: #00bcd4; /* Un azul cian para el borde */
-    box-shadow: 0 2px 5px rgba(0, 188, 212, 0.2);
-    color: #00838f; /* Texto oscuro para contraste */
+    background-color: var(--color-asignatura-disponible);
+    border-color: var(--color-borde-asignatura-disponible);
+    box-shadow: 0 2px 5px var(--color-sombra-asignatura-disponible);
+    color: var(--color-texto-disponible);
 }
 
 .asignatura.disponible h3,
 .asignatura.disponible .creditos,
 .asignatura.disponible .prereq-info {
-    color: #00838f;
+    color: var(--color-texto-disponible);
 }
 
 
 /* Estilo para materias cursadas (prioridad sobre 'disponible') */
 .asignatura.cursada {
-    background-color: #d4edda; /* Un verde claro para cursadas */
-    border-color: #28a745; /* Borde verde para cursadas */
-    box-shadow: 0 1px 3px rgba(40, 167, 69, 0.2);
-    color: #28a745; /* Texto más oscuro para contraste */
+    background-color: var(--color-asignatura-cursada);
+    border-color: var(--color-borde-asignatura-cursada);
+    box-shadow: 0 1px 3px var(--color-sombra-asignatura-cursada);
+    color: var(--color-texto-cursada);
 }
 
 .asignatura.cursada h3,
 .asignatura.cursada .creditos,
 .asignatura.cursada .prereq-info {
-    color: #28a745;
+    color: var(--color-texto-cursada);
 }
 
 
 /* Materia seleccionada por el usuario (prioridad más alta) */
 .asignatura.selected {
-    background-color: #d1ecf1; /* Color de selección (azul claro) */
-    border-color: #007bff;
-    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5); /* Anillo azul */
-    color: #007bff; /* Texto azul para contraste */
+    background-color: var(--color-asignatura-selected);
+    border-color: var(--color-borde-asignatura-selected);
+    box-shadow: 0 0 0 3px var(--color-sombra-asignatura-selected); /* Anillo de selección */
+    color: var(--color-texto-selected);
 }
 
 .asignatura.selected h3,
 .asignatura.selected .creditos,
 .asignatura.selected .prereq-info {
-    color: #007bff;
+    color: var(--color-texto-selected);
 }
 
 /* Materias que son prerrequisito de la materia seleccionada */
 .asignatura.prerequisito-active {
-    background-color: #fff3cd; /* Naranja muy claro */
-    border-color: #ffc107; /* Borde naranja */
-    box-shadow: 0 4px 8px rgba(255, 193, 7, 0.2);
-    color: #856404; /* Texto marrón oscuro para contraste */
+    background-color: var(--color-asignatura-prerequisito-active);
+    border-color: var(--color-borde-asignatura-prerequisito-active);
+    box-shadow: 0 4px 8px var(--color-sombra-asignatura-prerequisito-active);
+    color: var(--color-texto-prerequisito-active);
 }
 
 .asignatura.prerequisito-active h3,
 .asignatura.prerequisito-active .creditos,
 .asignatura.prerequisito-active .prereq-info {
-    color: #856404;
+    color: var(--color-texto-prerequisito-active);
 }
 
 /* Materias que tienen la asignatura seleccionada como prerrequisito (dependencias futuras) */
 .asignatura.dependencia-active {
-    background-color: #e2f0d9; /* Verde más pálido */
-    border-color: #4CAF50; /* Borde verde un poco más oscuro */
-    box-shadow: 0 4px 8px rgba(76, 175, 80, 0.2);
-    color: #388E3C; /* Texto verde oscuro para contraste */
+    background-color: var(--color-asignatura-dependencia-active);
+    border-color: var(--color-borde-asignatura-dependencia-active);
+    box-shadow: 0 4px 8px var(--color-sombra-asignatura-dependencia-active);
+    color: var(--color-texto-dependencia-active);
 }
 
 .asignatura.dependencia-active h3,
 .asignatura.dependencia-active .creditos,
 .asignatura.dependencia-active .prereq-info {
-    color: #388E3C;
+    color: var(--color-texto-dependencia-active);
 }
 
 
 .prereq-info {
     font-size: 0.75em;
-    color: #888;
+    color: var(--color-texto-secundario);
     margin-top: 5px;
     display: none;
     white-space: normal;
@@ -186,20 +227,22 @@ h1 {
 .simbologia {
     margin: 20px auto;
     padding: 20px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--color-borde-semestre);
     border-radius: 8px;
-    background-color: #f9f9f9;
+    background-color: var(--color-fondo-semestre);
     max-width: 1200px;
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
     font-size: 0.9em;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 .simbologia p {
     margin: 5px 15px;
     display: flex;
     align-items: center;
+    color: var(--color-texto-general);
 }
 
 .prereq-icon {
@@ -208,273 +251,77 @@ h1 {
     height: 10px;
     border-radius: 3px;
     margin-right: 8px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-borde-semestre);
 }
 
 /* Ajusta estos colores de los iconos de la simbología para que coincidan con tus clases CSS */
 .prereq-icon.materia {
-    background-color: #ffffff; /* Color por defecto */
-    border-color: #a0d0ff;
+    background-color: var(--color-asignatura-default);
+    border-color: var(--color-borde-asignatura-default);
 }
 
-.prereq-icon.disponible-simbolo { /* NUEVO ICONO para materias disponibles */
-    background-color: #e0f2f7; /* Coincide con .disponible */
-    border-color: #00bcd4;
+.prereq-icon.disponible-simbolo {
+    background-color: var(--color-asignatura-disponible);
+    border-color: var(--color-borde-asignatura-disponible);
 }
 
 .prereq-icon.cursada-simbolo {
-    background-color: #d4edda; /* Coincide con .cursada */
-    border-color: #28a745;
+    background-color: var(--color-asignatura-cursada);
+    border-color: var(--color-borde-asignatura-cursada);
 }
 
-.prereq-icon.seleccionada-simbolo { /* Icono para la materia seleccionada */
-    background-color: #d1ecf1; /* Coincide con .selected */
-    border-color: #007bff;
+.prereq-icon.seleccionada-simbolo {
+    background-color: var(--color-asignatura-selected);
+    border-color: var(--color-borde-asignatura-selected);
 }
 
-.prereq-icon.prerequisito-simbolo { /* Icono para prerrequisitos activos */
-    background-color: #fff3cd; /* Coincide con .prerequisito-active */
-    border-color: #ffc107;
+.prereq-icon.prerequisito-simbolo {
+    background-color: var(--color-asignatura-prerequisito-active);
+    border-color: var(--color-borde-asignatura-prerequisito-active);
 }
 
-.prereq-icon.dependencia-simbolo { /* Icono para dependencias futuras */
-    background-color: #e2f0d9; /* Coincide con .dependencia-active */
-    border-color: #4CAF50;
-}
-
-}
-
-.asignatura h3 {
-    margin: 0;
-    font-size: 0.9em;
-    color: #333;
-    line-height: 1.3;
-}
-
-.asignatura .creditos {
-    display: block;
-    margin-top: 5px;
-    font-size: 0.8em;
-    color: #666;
-    font-weight: bold;
-}
-
-/* Estado de interactividad: Hover */
-.asignatura:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    border-color: #007bff;
-}
-
----
-
-### **Estilos para los diferentes estados de las Asignaturas**
-
-Aquí es donde definimos los colores y otros estilos para las clases que maneja tu JavaScript.
-
-```css
-/* Estilo para materias cursadas (persiste independientemente de la selección) */
-.asignatura.cursada {
-    background-color: #d4edda; /* Un verde claro para cursadas */
-    border-color: #28a745; /* Borde verde para cursadas */
-    box-shadow: 0 1px 3px rgba(40, 167, 69, 0.2);
-    color: #28a745; /* Texto más oscuro para contraste */
-}
-
-/* Asegura que el texto y los créditos cambien de color con el fondo */
-.asignatura.cursada h3,
-.asignatura.cursada .creditos,
-.asignatura.cursada .prereq-info {
-    color: #28a745;
+.prereq-icon.dependencia-simbolo {
+    background-color: var(--color-asignatura-dependencia-active);
+    border-color: var(--color-borde-asignatura-dependencia-active);
 }
 
 
-/* Materia seleccionada por el usuario (prioridad alta para visibilidad) */
-/* El color azul claro original para 'selected' está bien, pero aseguramos el texto. */
-.asignatura.selected {
-    background-color: #d1ecf1; /* Color de selección (azul claro) */
-    border-color: #007bff;
-    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5); /* Anillo azul */
-    color: #007bff; /* Texto azul para contraste */
-}
+/* --- Media Queries para Responsive Design --- */
 
-.asignatura.selected h3,
-.asignatura.selected .creditos,
-.asignatura.selected .prereq-info {
-    color: #007bff;
-}
-
-/* Materias que son prerrequisito de la materia seleccionada */
-/* He elegido un naranja suave para estas, indicando que "se necesitan" */
-.asignatura.prerequisito-active {
-    background-color: #fff3cd; /* Naranja muy claro */
-    border-color: #ffc107; /* Borde naranja */
-    box-shadow: 0 4px 8px rgba(255, 193, 7, 0.2);
-    color: #856404; /* Texto marrón oscuro para contraste */
-}
-
-.asignatura.prerequisito-active h3,
-.asignatura.prerequisito-active .creditos,
-.asignatura.prerequisito-active .prereq-info {
-    color: #856404;
-}
-
-/* Materias que tienen la asignatura seleccionada como prerrequisito (dependencias futuras) */
-/* Un verde más oscuro para estas, indicando un "camino" o "desbloqueo" */
-.asignatura.dependencia-active {
-    background-color: #e2f0d9; /* Verde más pálido */
-    border-color: #4CAF50; /* Borde verde un poco más oscuro */
-    box-shadow: 0 4px 8px rgba(76, 175, 80, 0.2);
-    color: #388E3C; /* Texto verde oscuro para contraste */
-}
-
-.asignatura.dependencia-active h3,
-.asignatura.dependencia-active .creditos,
-.asignatura.dependencia-active .prereq-info {
-    color: #388E3C;
-}
-
-
-/* Asegurar que el prerrequisito-info se vea */
-.prereq-info {
-    font-size: 0.75em;
-    color: #888;
-    margin-top: 5px;
-    display: none; /* Ocultar por defecto, se muestra con JS al seleccionar */
-    white-space: normal; /* Asegura que el texto se ajuste */
-}
-
-/* Simbología */
-.simbologia {
-    margin: 20px auto;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    max-width: 1200px; /* Un ancho razonable para la simbología */
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    font-size: 0.9em;
-}
-
-.simbologia p {
-    margin: 5px 15px;
-    display: flex;
-    align-items: center;
-}
-
-.prereq-icon {
-    display: inline-block;
-    width: 20px;
-    height: 10px;
-    border-radius: 3px;
-    margin-right: 8px;
-    border: 1px solid #ccc; /* Borde genérico */
-}
-
-/* Ajusta estos colores de los iconos de la simbología para que coincidan con tus clases CSS */
-/* Icono para 'Materia' (estado por defecto, o la que se ha clicado sin otros resaltados) */
-.prereq-icon.materia {
-    background-color: #d1ecf1; /* Coincide con .selected */
-    border-color: #007bff;
-}
-
-/* Icono para 'Prerrequisito de 2 o más materias' (usaremos este para representar 'prerequisito-active') */
-.prereq-icon.dos-mas {
-    background-color: #fff3cd; /* Coincide con .prerequisito-active */
-    border-color: #ffc107;
-}
-
-/* Si quieres un icono para 'dependencia-active' o 'cursada', agrégalo aquí */
-.prereq-icon.dependencia-futura { /* Nuevo icono para las dependencias futuras */
-    background-color: #e2f0d9; /* Coincide con .dependencia-active */
-    border-color: #4CAF50;
-}
-
-.prereq-icon.cursada-simbolo { /* Nuevo icono para las materias cursadas */
-    background-color: #d4edda; /* Coincide con .cursada */
-    border-color: #28a745;
-}
-
-
-/* Los estilos para las líneas SVG ya no son necesarios si no se dibujan líneas,
-   pero si los dejas, no harán nada si el JS no las crea.
-   Los dejo por si en el futuro decides reactivarlos: */
-.prereq-svg-line {
-    position: absolute;
-    pointer-events: none;
-    z-index: 5;
-    overflow: visible;
-}
-
-
-/* Media Queries para Responsividad en Tablets y Pantallas Pequeñas */
-@media (max-width: 1200px) {
+/* Para pantallas más pequeñas, los semestres se apilan verticalmente */
+@media (max-width: 768px) {
     .malla-container {
-        grid-template-columns: repeat(8, minmax(200px, 1fr));
-        min-width: calc(8 * 200px + 7 * 20px);
-        gap: 20px;
-        padding: 20px;
-    }
-    .semestre {
-        min-width: 200px;
-    }
-    .asignatura {
-        min-height: 120px; /* Ajuste proporcional para pantallas más pequeñas */
-    }
-}
-
-@media (max-width: 768px) { /* Para tablets más pequeñas en modo retrato */
-    h1 {
-        font-size: 1.5em;
-    }
-    .malla-container {
-        grid-template-columns: repeat(8, minmax(150px, 1fr));
-        min-width: calc(8 * 150px + 7 * 10px);
-        gap: 10px;
+        grid-auto-flow: row; /* Apila los semestres verticalmente */
+        grid-template-columns: 1fr; /* Una sola columna para los semestres */
+        gap: 15px;
         padding: 15px;
     }
+
     .semestre {
-        padding: 10px;
-        min-width: 150px;
+        min-width: unset; /* Elimina el ancho mínimo para que se ajusten al 100% */
+        width: 100%;
     }
-    .semestre h2 {
-        font-size: 1.2em;
+
+    header h1 {
+        font-size: 1.5em;
     }
+
     .asignatura {
+        min-height: 120px;
         padding: 10px;
-        margin-bottom: 10px;
-        min-height: 100px; /* Ajuste proporcional para pantallas pequeñas */
     }
+
     .asignatura h3 {
-        font-size: 0.8em;
+        font-size: 0.85em;
     }
-    .asignatura .creditos {
-        font-size: 0.7em;
-    }
+
     .simbologia {
         flex-direction: column;
         align-items: flex-start;
         padding: 15px;
     }
-}
 
-@media (max-width: 480px) { /* Para móviles */
-    h1 {
-        font-size: 1.2em;
-    }
-    .malla-container {
-        grid-template-columns: repeat(8, minmax(110px, 1fr));
-        min-width: calc(8 * 110px + 7 * 8px);
-        gap: 8px;
-        padding: 10px;
-    }
-    .asignatura {
-        padding: 8px;
-        min-height: 80px; /* Ajuste proporcional para móviles */
-    }
-    .asignatura h3 {
-        font-size: 0.7em;
+    .simbologia p {
+        margin: 5px 0;
     }
 }
