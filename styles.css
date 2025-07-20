@@ -8,10 +8,11 @@
     --color-borde-asignatura-default: #F06292; /* Rosa frambuesa suave */
     --color-sombra-asignatura-default: rgba(240, 98, 146, 0.1);
 
-    --color-asignatura-disponible: #E1F5FE; /* Azul celeste muy claro, alternativa al rosa para diferenciación clara, o usar #F4EEF7 (lila) */
-    --color-borde-asignatura-disponible: #81D4FA; /* Azul cielo claro, o usar #B9B4D7 (lila más oscuro) */
-    --color-sombra-asignatura-disponible: rgba(129, 212, 250, 0.3); /* o rgba(185, 180, 215, 0.3) */
-    --color-texto-disponible: #01579B; /* Azul oscuro para contraste, o usar #5B4F8B (morado oscuro) */
+    --color-asignatura-disponible: #F4EEF7; /* Lila muy claro, alternativa al rosa para diferenciación clara */
+    --color-borde-asignatura-disponible: #B9B4D7; /* Lila más oscuro */
+    --color-sombra-asignatura-disponible: rgba(185, 180, 215, 0.3);
+    --color-texto-disponible: #5B4F8B; /* Morado oscuro para contraste */
+
 
     --color-asignatura-cursada: #F9B7C7; /* Rosa más intenso y cálido para cursadas */
     --color-borde-asignatura-cursada: #F06292; /* Usando el mismo rosa frambuesa del default para consistencia */
