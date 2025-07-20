@@ -286,7 +286,7 @@ h1 {
 }
 
 
-/* --- Media Queries para Responsive Design --- */
+
 
 /* Para pantallas más pequeñas, los semestres se apilan verticalmente */
 @media (max-width: 768px) {
