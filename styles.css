@@ -13,11 +13,10 @@
     --color-sombra-asignatura-disponible: rgba(129, 212, 250, 0.3); /* o rgba(185, 180, 215, 0.3) */
     --color-texto-disponible: #01579B; /* Azul oscuro para contraste, o usar #5B4F8B (morado oscuro) */
 
-
-    --color-asignatura-cursada: #E8F5E9; /* Verde menta muy suave para cursadas */
-    --color-borde-asignatura-cursada: #81C784; /* Verde suave para cursadas */
-    --color-sombra-asignatura-cursada: rgba(129, 199, 132, 0.3);
-    --color-texto-cursada: #388E3C; /* Verde oscuro para contraste */
+    --color-asignatura-cursada: #F9B7C7; /* Rosa más intenso y cálido para cursadas */
+    --color-borde-asignatura-cursada: #F06292; /* Usando el mismo rosa frambuesa del default para consistencia */
+    --color-sombra-asignatura-cursada: rgba(240, 98, 146, 0.3);
+    --color-texto-cursada: #C2185B; /* Rosa oscuro para contraste */
 
     --color-asignatura-selected: #F8BBD0; /* Rosa medio/ciruela claro para selección */
     --color-borde-asignatura-selected: #F06292; /* Rosa más intenso para borde de selección */
