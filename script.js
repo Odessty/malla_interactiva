@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const asignaturas = document.querySelectorAll('.asignatura');
     const mallaContainer = document.querySelector('.malla-container');
-    let activeLines = []; // Se mantiene para clearLines, aunque no se dibujen SVGs
+    let activeLines = []; 
 
     // --- Funciones de Utilidad ---
 
@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     prereqInfo.style.display = 'none';
                 }
             });
-            clearLines(); // Asegurarse de limpiar cualquier SVG residual
+            clearLines(); 
 
             // Si la asignatura clicada NO tiene la clase 'selected' (después de haberlas limpiado)
             // entonces la seleccionamos para mostrar sus relaciones.
